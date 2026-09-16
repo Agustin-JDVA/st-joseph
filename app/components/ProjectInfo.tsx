@@ -6,16 +6,13 @@ export default function ProjectInfo() {
       id="info"
       className="project-info-section relative flex h-screen w-full items-center justify-center overflow-hidden bg-white text-black"
     >
-      {/* CONTENIDO CENTRADO */}
       <div className="concept-layout">
-        {/* TÍTULO IZQUIERDO */}
         <div className="concept-left">
-          <h2 className="font-[family:var(--font-wix)] text-[23px] font-bold uppercase leading-[0.95] tracking-[-0.03em] text-black sm:text-[25px] lg:text-[28px]">
+          <h2 className="concept-title">
             ST. JOSEPH
           </h2>
         </div>
 
-        {/* TEXTO DERECHO */}
         <div className="concept-right">
           <p className="concept-main-text">
             Habitar la calma, a minutos de todo.
@@ -39,8 +36,7 @@ export default function ProjectInfo() {
 
       <style jsx global>{`
         /*
-          BLOQUE COMPLETO CENTRADO
-          EN TODA LA PANTALLA
+          ESCRITORIO
         */
 
         .concept-layout {
@@ -49,8 +45,7 @@ export default function ProjectInfo() {
           display: grid;
 
           grid-template-columns:
-            46%
-            54%;
+            46% 54%;
 
           align-items: start;
         }
@@ -60,16 +55,45 @@ export default function ProjectInfo() {
           min-width: 0;
         }
 
-        /*
-          TEXTO PRINCIPAL DERECHO
-        */
+        .concept-title {
+          margin: 0;
+
+          font-family:
+            var(--font-wix),
+            Arial,
+            sans-serif;
+
+          font-size: clamp(
+            23px,
+            1.45vw,
+            28px
+          );
+
+          font-weight: 700;
+
+          line-height: 0.95;
+
+          letter-spacing: -0.03em;
+
+          text-transform: uppercase;
+
+          color: #000000;
+        }
 
         .concept-main-text {
           margin: 0;
 
-          font-family: var(--font-wix), Arial, sans-serif;
+          font-family:
+            var(--font-wix),
+            Arial,
+            sans-serif;
 
-          font-size: 20px;
+          font-size: clamp(
+            17px,
+            1.04vw,
+            20px
+          );
+
           font-weight: 700;
 
           line-height: 1.15;
@@ -79,16 +103,25 @@ export default function ProjectInfo() {
           color: #000000;
         }
 
-        /*
-          CUERPO DEL TEXTO
-        */
-
         .concept-body-text {
-          margin: 24px 0 0 0;
+          margin: clamp(
+            18px,
+            1.25vw,
+            24px
+          )
+          0 0 0;
 
-          font-family: var(--font-wix), Arial, sans-serif;
+          font-family:
+            var(--font-wix),
+            Arial,
+            sans-serif;
 
-          font-size: 16px;
+          font-size: clamp(
+            14px,
+            0.84vw,
+            16px
+          );
+
           font-weight: 400;
 
           line-height: 1.45;
@@ -99,24 +132,29 @@ export default function ProjectInfo() {
         }
 
         /*
-          PANTALLAS MEDIANAS
+          TABLET / PANTALLA INTERMEDIA
         */
 
-        @media (max-width: 1200px) and (orientation: landscape) {
+        @media (
+          max-width: 1200px
+        ) and (
+          orientation: landscape
+        ) {
           .concept-layout {
             width: 84%;
 
             grid-template-columns:
-              46.5%
-              53.5%;
+              46.5% 53.5%;
           }
         }
 
         /*
-          FORMATO VERTICAL
+          CELULAR / TABLET VERTICAL
         */
 
-        @media (orientation: portrait) {
+        @media (
+          orientation: portrait
+        ) {
           .project-info-section {
             padding-left: 8%;
             padding-right: 8%;
@@ -126,26 +164,152 @@ export default function ProjectInfo() {
             width: 100%;
 
             display: flex;
+
             flex-direction: column;
           }
 
           .concept-left {
-            margin-bottom: 60px;
+            margin-bottom: clamp(
+              32px,
+              8vh,
+              60px
+            );
           }
 
           .concept-right {
             width: 100%;
           }
 
+          .concept-title {
+            font-size: clamp(
+              17px,
+              5vw,
+              23px
+            );
+          }
+
           .concept-main-text {
-            font-size: 17px;
+            font-size: clamp(
+              13px,
+              4vw,
+              17px
+            );
           }
 
           .concept-body-text {
-            margin-top: 18px;
+            margin-top: clamp(
+              13px,
+              4vw,
+              18px
+            );
 
-            font-size: 14px;
+            font-size: clamp(
+              11px,
+              3.2vw,
+              14px
+            );
+
             line-height: 1.4;
+          }
+        }
+
+        /*
+          CELULAR HORIZONTAL
+
+          Acá usamos también la altura
+          para evitar que un teléfono
+          horizontal tome tamaños de tablet
+          o escritorio.
+        */
+
+        @media (
+          orientation: landscape
+        ) and (
+          max-height: 650px
+        ) {
+          .project-info-section {
+            padding-left: 7%;
+            padding-right: 7%;
+          }
+
+          .concept-layout {
+            width: 100%;
+
+            grid-template-columns:
+              38% 62%;
+
+            align-items: start;
+          }
+
+          .concept-title {
+            font-size: clamp(
+              15px,
+              4.2vh,
+              20px
+            );
+          }
+
+          .concept-main-text {
+            font-size: clamp(
+              12px,
+              3.5vh,
+              16px
+            );
+
+            line-height: 1.12;
+          }
+
+          .concept-body-text {
+            margin-top: clamp(
+              9px,
+              3vh,
+              14px
+            );
+
+            font-size: clamp(
+              9px,
+              2.8vh,
+              12px
+            );
+
+            line-height: 1.32;
+          }
+        }
+
+        /*
+          CELULARES HORIZONTALES
+          MUY BAJOS
+        */
+
+        @media (
+          orientation: landscape
+        ) and (
+          max-height: 450px
+        ) {
+          .project-info-section {
+            padding-left: 6%;
+            padding-right: 6%;
+          }
+
+          .concept-layout {
+            grid-template-columns:
+              34% 66%;
+          }
+
+          .concept-title {
+            font-size: 14px;
+          }
+
+          .concept-main-text {
+            font-size: 11px;
+          }
+
+          .concept-body-text {
+            margin-top: 8px;
+
+            font-size: 8.5px;
+
+            line-height: 1.28;
           }
         }
       `}</style>

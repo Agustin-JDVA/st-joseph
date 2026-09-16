@@ -1,6 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import {
+  useEffect,
+  useState,
+} from "react";
 
 type LogoProps = {
   projectMode?: boolean;
@@ -9,8 +12,10 @@ type LogoProps = {
 export default function Logo({
   projectMode = false,
 }: LogoProps) {
-  const [useBlackLogo, setUseBlackLogo] =
-    useState(true);
+  const [
+    useBlackLogo,
+    setUseBlackLogo,
+  ] = useState(true);
 
   useEffect(() => {
     const updateLogo = () => {
@@ -18,6 +23,7 @@ export default function Logo({
         PORTADA INICIAL:
         LOGO NEGRO
       */
+
       if (!projectMode) {
         setUseBlackLogo(true);
         return;
@@ -46,8 +52,10 @@ export default function Logo({
           section.getBoundingClientRect();
 
         if (
-          rect.top <= viewportCenter &&
-          rect.bottom > viewportCenter
+          rect.top <=
+            viewportCenter &&
+          rect.bottom >
+            viewportCenter
         ) {
           currentSection = id;
           break;
@@ -71,7 +79,9 @@ export default function Logo({
       ];
 
       setUseBlackLogo(
-        blackSections.includes(currentSection)
+        blackSections.includes(
+          currentSection
+        )
       );
     };
 
@@ -108,7 +118,7 @@ export default function Logo({
       className={
         projectMode
           ? "fixed left-3 top-3 z-[999999] sm:left-4 sm:top-4 md:left-7 md:top-[22px]"
-          : "fixed bottom-4 left-1/2 z-50 -translate-x-1/2 sm:bottom-6 md:bottom-8"
+          : "intro-jdva-wrapper fixed left-1/2 z-50 -translate-x-1/2"
       }
     >
       <a
@@ -119,11 +129,12 @@ export default function Logo({
         className="flex cursor-pointer flex-col items-start"
       >
         {/* PROYECTA */}
+
         <span
-          className={`mb-1 font-[family:var(--font-wix)] font-medium tracking-[0.08em] transition-colors duration-300 ${
+          className={`font-[family:var(--font-wix)] font-medium tracking-[0.08em] transition-colors duration-300 ${
             projectMode
-              ? "text-[7px] sm:text-[8px] md:text-[9px]"
-              : "relative -top-1 text-[7px] min-[380px]:text-[8px] sm:text-[10px] md:text-[11px]"
+              ? "mb-1 text-[7px] sm:text-[8px] md:text-[9px]"
+              : "intro-jdva-proyecta"
           } ${
             useBlackLogo
               ? "text-black"
@@ -134,6 +145,7 @@ export default function Logo({
         </span>
 
         {/* JDVA */}
+
         <img
           src={
             useBlackLogo
@@ -144,11 +156,104 @@ export default function Logo({
           className={
             projectMode
               ? "h-[17px] w-auto sm:h-[21px] md:h-[26px] lg:h-[30px]"
-              : "h-[18px] w-auto min-[380px]:h-[20px] sm:h-[29px] md:h-[35px] lg:h-10"
+              : "intro-jdva-image w-auto"
           }
           draggable={false}
         />
       </a>
+
+      <style jsx global>{`
+        /*
+          JDVA EN PORTADA
+        */
+
+        .intro-jdva-wrapper {
+          bottom: clamp(
+            16px,
+            3vw,
+            32px
+          );
+        }
+
+        .intro-jdva-proyecta {
+          position: relative;
+
+          top: -4px;
+
+          margin-bottom: 4px;
+
+          font-size: clamp(
+            7px,
+            0.58vw,
+            11px
+          );
+        }
+
+        .intro-jdva-image {
+          height: clamp(
+            18px,
+            2.1vw,
+            40px
+          );
+        }
+
+        /*
+          CELULAR HORIZONTAL
+        */
+
+        @media (
+          orientation: landscape
+        ) and (max-height: 650px) {
+          .intro-jdva-wrapper {
+            bottom: clamp(
+              10px,
+              3vh,
+              18px
+            );
+          }
+
+          .intro-jdva-proyecta {
+            top: -2px;
+
+            margin-bottom: 2px;
+
+            font-size: clamp(
+              6px,
+              1.6vh,
+              8px
+            );
+          }
+
+          .intro-jdva-image {
+            height: clamp(
+              15px,
+              5vh,
+              21px
+            );
+          }
+        }
+
+        /*
+          CELULAR HORIZONTAL
+          MUY BAJO
+        */
+
+        @media (
+          orientation: landscape
+        ) and (max-height: 450px) {
+          .intro-jdva-wrapper {
+            bottom: 9px;
+          }
+
+          .intro-jdva-proyecta {
+            font-size: 6px;
+          }
+
+          .intro-jdva-image {
+            height: 15px;
+          }
+        }
+      `}</style>
     </div>
   );
 }

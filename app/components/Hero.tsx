@@ -25,7 +25,7 @@ export default function Hero({
 
           {/* LOGO ST. JOSEPH */}
           <div
-            className={`absolute left-1/2 top-8 z-10 -translate-x-1/2 transition-all duration-[750ms] ease-out sm:top-12 md:top-14 lg:top-16 ${
+            className={`intro-project-logo absolute left-1/2 z-10 -translate-x-1/2 transition-all duration-[750ms] ease-out ${
               isEntering
                 ? "-translate-y-3 opacity-0"
                 : "translate-y-0 opacity-100"
@@ -34,7 +34,7 @@ export default function Hero({
             <img
               src="/logo/st-joseph.png"
               alt="St. JOSEPH"
-              className="h-auto w-[155px] object-contain min-[380px]:w-[175px] sm:w-[280px] md:w-[340px] lg:w-[400px]"
+              className="intro-project-logo-image h-auto object-contain"
               draggable={false}
             />
           </div>
@@ -51,7 +51,7 @@ export default function Hero({
               type="button"
               onClick={onEnter}
               disabled={isEntering}
-              className="flex h-12 w-[205px] items-center justify-center rounded-full bg-white font-[family:var(--font-wix)] text-[9px] font-medium uppercase tracking-[0.15em] text-black shadow-xl transition-all duration-300 hover:scale-[1.03] active:scale-95 disabled:pointer-events-none min-[380px]:h-[50px] min-[380px]:w-[220px] min-[380px]:text-[10px] sm:h-16 sm:w-[280px] sm:text-sm sm:tracking-[0.18em]"
+              className="intro-enter-button flex items-center justify-center rounded-full bg-white font-[family:var(--font-wix)] font-medium uppercase text-black shadow-xl transition-all duration-300 hover:scale-[1.03] active:scale-95 disabled:pointer-events-none"
             >
               Ingresar al proyecto
             </button>
@@ -97,10 +97,144 @@ export default function Hero({
       )}
 
       <style jsx global>{`
+        /*
+          PORTADA RESPONSIVE
+
+          Ya no depende de sm / md / lg.
+          Los elementos crecen progresivamente
+          según el tamaño real de la pantalla.
+        */
+
+        .intro-project-logo {
+          top: clamp(24px, 3vw, 64px);
+        }
+
+        .intro-project-logo-image {
+          width: clamp(
+            150px,
+            21vw,
+            400px
+          );
+        }
+
+        .intro-enter-button {
+          width: clamp(
+            190px,
+            16vw,
+            280px
+          );
+
+          height: clamp(
+            44px,
+            4.2vw,
+            64px
+          );
+
+          padding-left: 18px;
+          padding-right: 18px;
+
+          font-size: clamp(
+            9px,
+            0.74vw,
+            14px
+          );
+
+          line-height: 1;
+
+          letter-spacing: clamp(
+            0.12em,
+            0.15vw,
+            0.18em
+          );
+        }
+
+        /*
+          CELULAR HORIZONTAL
+
+          Acá usamos también la ALTURA
+          de pantalla para evitar que el
+          contenido crezca como escritorio.
+        */
+
+        @media (
+          orientation: landscape
+        ) and (max-height: 650px) {
+          .intro-project-logo {
+            top: clamp(
+              16px,
+              4vh,
+              26px
+            );
+          }
+
+          .intro-project-logo-image {
+            width: clamp(
+              135px,
+              22vh,
+              185px
+            );
+          }
+
+          .intro-enter-button {
+            width: clamp(
+              180px,
+              32vh,
+              215px
+            );
+
+            height: clamp(
+              40px,
+              8vh,
+              48px
+            );
+
+            font-size: clamp(
+              8px,
+              1.7vh,
+              10px
+            );
+
+            letter-spacing: 0.13em;
+          }
+        }
+
+        /*
+          CELULARES HORIZONTALES
+          MUY BAJOS
+        */
+
+        @media (
+          orientation: landscape
+        ) and (max-height: 450px) {
+          .intro-project-logo {
+            top: 14px;
+          }
+
+          .intro-project-logo-image {
+            width: clamp(
+              125px,
+              34vh,
+              155px
+            );
+          }
+
+          .intro-enter-button {
+            width: 180px;
+            height: 40px;
+
+            font-size: 8px;
+          }
+        }
+
         .interior-scroll-enter {
           animation:
             interiorContentEnter 1300ms
-              cubic-bezier(0.22, 1, 0.36, 1)
+              cubic-bezier(
+                0.22,
+                1,
+                0.36,
+                1
+              )
               both,
             scrollInvitationFade 2.4s
               ease-in-out 1300ms infinite;
@@ -112,14 +246,17 @@ export default function Hero({
               ease-in-out infinite;
 
           filter: drop-shadow(
-            0 2px 4px rgba(0, 0, 0, 0.45)
+            0 2px 4px
+              rgba(0, 0, 0, 0.45)
           );
         }
 
         @keyframes interiorContentEnter {
           0% {
             opacity: 0;
-            transform: translateY(14px);
+            transform: translateY(
+              14px
+            );
           }
 
           35% {
@@ -128,21 +265,29 @@ export default function Hero({
 
           100% {
             opacity: 1;
-            transform: translateY(0);
+            transform: translateY(
+              0
+            );
           }
         }
 
         @keyframes scrollInvitationMove {
           0% {
-            transform: translateY(0);
+            transform: translateY(
+              0
+            );
           }
 
           50% {
-            transform: translateY(12px);
+            transform: translateY(
+              12px
+            );
           }
 
           100% {
-            transform: translateY(0);
+            transform: translateY(
+              0
+            );
           }
         }
 
