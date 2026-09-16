@@ -207,7 +207,6 @@ export default function ShareSection() {
           );
 
           font-weight: 700;
-
           line-height: 0.95;
 
           letter-spacing: -0.03em;
@@ -232,7 +231,6 @@ export default function ShareSection() {
           );
 
           font-weight: 400;
-
           line-height: 1.2;
 
           letter-spacing: -0.01em;
@@ -255,7 +253,6 @@ export default function ShareSection() {
           );
 
           font-weight: 700;
-
           line-height: 1.15;
 
           letter-spacing: -0.02em;
@@ -334,7 +331,6 @@ export default function ShareSection() {
           display: block !important;
 
           margin: 0 !important;
-
           padding: 0 !important;
 
           font-family:
@@ -472,7 +468,6 @@ export default function ShareSection() {
           display: flex;
 
           align-items: center;
-
           justify-content: space-between;
 
           width: 100%;
@@ -559,7 +554,6 @@ export default function ShareSection() {
           display: flex;
 
           align-items: center;
-
           justify-content: center;
 
           overflow: hidden;
@@ -575,8 +569,7 @@ export default function ShareSection() {
 
           object-fit: cover;
 
-          object-position:
-            center center;
+          object-position: center center;
         }
 
         /*
@@ -594,33 +587,24 @@ export default function ShareSection() {
 
           .share-right-top {
             left: 47%;
-
             width: 46%;
           }
 
-          /*
-            JDVA BAJA
-          */
-
           .share-left-bottom {
             left: 8%;
-            top: 72%;
+            top: 66%;
           }
-
-          /*
-            LINKS BAJAN TODAVÍA MÁS
-          */
 
           .share-right-bottom {
             left: 47%;
-            top: 76%;
+            top: 75%;
 
             width: 46%;
           }
         }
 
         /*
-          CELULARES Y PANTALLAS ANGOSTAS
+          CELULAR / PANTALLA ANGOSTA
         */
 
         @media (max-width: 768px) {
@@ -646,25 +630,35 @@ export default function ShareSection() {
           }
 
           /*
-            BAJAMOS JDVA PARA QUE NO
-            SE SUPERPONGA CON DESCARGAR PDF
+            ACERCAMOS LOS BOTONES
+            AL TEXTO SUPERIOR.
+          */
+
+          .project-actions {
+            margin-top: 2px;
+          }
+
+          /*
+            TODO EL CONTENIDO INFERIOR
+            SUBE.
           */
 
           .share-left-bottom {
             left: 7%;
-            top: 66%;
+            top: 61%;
 
             width: 86%;
           }
 
           /*
-            BAJAMOS LOS LINKS COMPLETOS
-            PARA SEPARARLOS DE JDVA
+            LOS LINKS QUEDAN MÁS ABAJO
+            RESPECTO DE JDVA, PERO EL
+            CONJUNTO GENERAL SUBE.
           */
 
           .share-right-bottom {
             left: 7%;
-            top: 79%;
+            top: 76%;
 
             width: 86%;
           }
@@ -702,15 +696,6 @@ export default function ShareSection() {
               );
 
             line-height: 1.2;
-          }
-
-          .project-actions {
-            margin-top:
-              clamp(
-                5px,
-                1.8vw,
-                8px
-              );
           }
 
           .project-action {
@@ -803,7 +788,7 @@ export default function ShareSection() {
         }
 
         /*
-          CELULARES MUY CHICOS
+          CELULAR MUY CHICO
         */
 
         @media (max-width: 390px) {
@@ -815,12 +800,16 @@ export default function ShareSection() {
             top: 24%;
           }
 
+          .project-actions {
+            margin-top: 1px;
+          }
+
           .share-left-bottom {
-            top: 66%;
+            top: 60%;
           }
 
           .share-right-bottom {
-            top: 80%;
+            top: 76%;
           }
 
           .share-project-title {
@@ -832,8 +821,7 @@ export default function ShareSection() {
           }
 
           .project-action-text {
-            font-size:
-              8px !important;
+            font-size: 8px !important;
           }
 
           .jdva-action {
@@ -843,9 +831,6 @@ export default function ShareSection() {
 
         /*
           CELULAR HORIZONTAL
-
-          TAMBIÉN SEPARAMOS JDVA Y LOS LINKS
-          CUANDO EL TELÉFONO ESTÁ ACOSTADO.
         */
 
         @media (
@@ -860,12 +845,31 @@ export default function ShareSection() {
             transform: none;
           }
 
-          .share-left-bottom {
-            top: 70%;
+          /*
+            COMPARTÍ / DESCARGA SUBEN
+            CONTRA EL TEXTO PRINCIPAL.
+          */
+
+          .project-actions {
+            margin-top: 2px;
           }
 
+          /*
+            JDVA SUBE CON EL CONJUNTO.
+          */
+
+          .share-left-bottom {
+            top: 64%;
+          }
+
+          /*
+            SITIO WEB / REDES / LINKEDIN
+            QUEDAN UN POCO MÁS ABAJO
+            RESPECTO A JDVA.
+          */
+
           .share-right-bottom {
-            top: 77%;
+            top: 73%;
           }
 
           .share-project-title {
