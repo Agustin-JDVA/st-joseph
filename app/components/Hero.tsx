@@ -16,7 +16,6 @@ export default function Hero({
     >
       {introMode ? (
         <>
-          {/* PORTADA INICIAL */}
           <img
             src="/renders/render-01.jpg"
             alt="St. JOSEPH"
@@ -26,7 +25,7 @@ export default function Hero({
 
           {/* LOGO ST. JOSEPH */}
           <div
-            className={`absolute left-1/2 top-10 z-10 -translate-x-1/2 transition-all duration-[750ms] ease-out sm:top-12 md:top-14 lg:top-16 ${
+            className={`absolute left-1/2 top-8 z-10 -translate-x-1/2 transition-all duration-[750ms] ease-out sm:top-12 md:top-14 lg:top-16 ${
               isEntering
                 ? "-translate-y-3 opacity-0"
                 : "translate-y-0 opacity-100"
@@ -35,7 +34,7 @@ export default function Hero({
             <img
               src="/logo/st-joseph.png"
               alt="St. JOSEPH"
-              className="h-auto w-[220px] object-contain sm:w-[280px] md:w-[340px] lg:w-[400px]"
+              className="h-auto w-[155px] object-contain min-[380px]:w-[175px] sm:w-[280px] md:w-[340px] lg:w-[400px]"
               draggable={false}
             />
           </div>
@@ -52,7 +51,7 @@ export default function Hero({
               type="button"
               onClick={onEnter}
               disabled={isEntering}
-              className="flex h-14 w-[250px] items-center justify-center rounded-full bg-white font-[family:var(--font-wix)] text-xs font-medium uppercase tracking-[0.18em] text-black shadow-xl transition-all duration-300 hover:scale-[1.03] active:scale-95 disabled:pointer-events-none sm:h-16 sm:w-[280px] sm:text-sm"
+              className="flex h-12 w-[205px] items-center justify-center rounded-full bg-white font-[family:var(--font-wix)] text-[9px] font-medium uppercase tracking-[0.15em] text-black shadow-xl transition-all duration-300 hover:scale-[1.03] active:scale-95 disabled:pointer-events-none min-[380px]:h-[50px] min-[380px]:w-[220px] min-[380px]:text-[10px] sm:h-16 sm:w-[280px] sm:text-sm sm:tracking-[0.18em]"
             >
               Ingresar al proyecto
             </button>
@@ -60,7 +59,6 @@ export default function Hero({
         </>
       ) : (
         <>
-          {/* VIDEO DE INICIO */}
           <video
             className="absolute inset-0 h-full w-full object-cover"
             autoPlay
@@ -76,7 +74,6 @@ export default function Hero({
             />
           </video>
 
-          {/* DESLIZA PARA RECORRER */}
           <div className="pointer-events-none absolute inset-x-0 bottom-10 z-20 flex justify-center sm:bottom-12 md:bottom-14">
             <a
               href="#info"

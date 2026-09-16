@@ -9,7 +9,8 @@ type LogoProps = {
 export default function Logo({
   projectMode = false,
 }: LogoProps) {
-  const [useBlackLogo, setUseBlackLogo] = useState(true);
+  const [useBlackLogo, setUseBlackLogo] =
+    useState(true);
 
   useEffect(() => {
     const updateLogo = () => {
@@ -30,16 +31,19 @@ export default function Logo({
         "compartir",
       ];
 
-      const viewportCenter = window.innerHeight / 2;
+      const viewportCenter =
+        window.innerHeight / 2;
 
       let currentSection = "";
 
       for (const id of sectionIds) {
-        const section = document.getElementById(id);
+        const section =
+          document.getElementById(id);
 
         if (!section) continue;
 
-        const rect = section.getBoundingClientRect();
+        const rect =
+          section.getBoundingClientRect();
 
         if (
           rect.top <= viewportCenter &&
@@ -119,7 +123,7 @@ export default function Logo({
           className={`mb-1 font-[family:var(--font-wix)] font-medium tracking-[0.08em] transition-colors duration-300 ${
             projectMode
               ? "text-[7px] sm:text-[8px] md:text-[9px]"
-              : "relative -top-1 text-[9px] sm:text-[10px] md:text-[11px]"
+              : "relative -top-1 text-[7px] min-[380px]:text-[8px] sm:text-[10px] md:text-[11px]"
           } ${
             useBlackLogo
               ? "text-black"
@@ -140,7 +144,7 @@ export default function Logo({
           className={
             projectMode
               ? "h-[17px] w-auto sm:h-[21px] md:h-[26px] lg:h-[30px]"
-              : "h-[23px] w-auto sm:h-[29px] md:h-[35px] lg:h-10"
+              : "h-[18px] w-auto min-[380px]:h-[20px] sm:h-[29px] md:h-[35px] lg:h-10"
           }
           draggable={false}
         />
