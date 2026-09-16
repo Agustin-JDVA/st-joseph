@@ -9,34 +9,28 @@ import {
 
 const plans = [
   {
-    name: "Planta Baja",
-    src: "/planos/planta baja.jpg",
+    name: "Planta Baja Tipo",
+    src: "/planos/planta baja tipo.png",
   },
   {
-    name: "Planta Alta",
-    src: "/planos/planta alta.jpg",
+    name: "Planta Baja",
+    src: "/planos/planta baja.png",
+  },
+  {
+    name: "Planta Azotea",
+    src: "/planos/planta azotea.png",
+  },
+  {
+    name: "Planta Subsuelo",
+    src: "/planos/planta subsuelo.png",
   },
 ];
 
 const sharedButtonStyle = `
-  flex
-  h-14
-  w-[215px]
-  items-center
-  justify-center
-  rounded-full
-  bg-white
-  font-[family:var(--font-wix)]
-  text-[11px]
-  font-medium
-  uppercase
-  tracking-[0.17em]
-  text-black
-  shadow-xl
-  transition-all
-  duration-200
-  hover:scale-[1.02]
-  active:scale-95
+  flex h-14 w-[215px] items-center justify-center rounded-full bg-white
+  font-[family:var(--font-wix)] text-[11px] font-medium uppercase
+  tracking-[0.17em] text-black shadow-xl transition-all duration-200
+  hover:scale-[1.02] active:scale-95
 `;
 
 const PlanControls = ({
@@ -48,11 +42,7 @@ const PlanControls = ({
   isDesktop: boolean;
   onExit: () => void;
 }) => {
-  const {
-    zoomIn,
-    zoomOut,
-    resetTransform,
-  } = useControls();
+  const { zoomIn, zoomOut, resetTransform } = useControls();
 
   if (!isExploring) return null;
 
@@ -63,14 +53,11 @@ const PlanControls = ({
 
   return (
     <>
-      {/* CONTROLES DE ZOOM EN ESCRITORIO */}
       {isDesktop && (
         <div className="pointer-events-auto absolute right-5 top-1/2 z-[9998] flex -translate-y-1/2 flex-col gap-2">
           <button
             type="button"
-            onClick={() =>
-              zoomIn(0.4, 250)
-            }
+            onClick={() => zoomIn(0.4, 250)}
             className="flex h-12 w-12 items-center justify-center rounded-lg bg-white text-2xl font-medium text-black shadow-lg transition-transform duration-200 active:scale-95"
             aria-label="Acercar plano"
           >
@@ -79,9 +66,7 @@ const PlanControls = ({
 
           <button
             type="button"
-            onClick={() =>
-              zoomOut(0.4, 250)
-            }
+            onClick={() => zoomOut(0.4, 250)}
             className="flex h-12 w-12 items-center justify-center rounded-lg bg-white text-2xl font-medium text-black shadow-lg transition-transform duration-200 active:scale-95"
             aria-label="Alejar plano"
           >
@@ -90,7 +75,6 @@ const PlanControls = ({
         </div>
       )}
 
-      {/* SALIR DEL PLANO - ABAJO */}
       <button
         type="button"
         onClick={handleExit}
@@ -113,14 +97,12 @@ const PlanImage = ({
   isExploring: boolean;
   planWrapperClass: string;
 }) => {
-  const { resetTransform } =
-    useControls();
+  const { resetTransform } = useControls();
 
   useEffect(() => {
     if (isExploring) return;
 
-    const section =
-      document.getElementById("planos");
+    const section = document.getElementById("planos");
 
     if (!section) return;
 
@@ -132,28 +114,22 @@ const PlanImage = ({
       });
     };
 
-    const observer =
-      new IntersectionObserver(
-        (entries) => {
-          const entry = entries[0];
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
 
-          if (
-            entry.isIntersecting &&
-            entry.intersectionRatio >=
-              0.25 &&
-            !isExploring
-          ) {
-            centerPlan();
-          }
-        },
-        {
-          threshold: [
-            0.25,
-            0.5,
-            0.75,
-          ],
+        if (
+          entry.isIntersecting &&
+          entry.intersectionRatio >= 0.25 &&
+          !isExploring
+        ) {
+          centerPlan();
         }
-      );
+      },
+      {
+        threshold: [0.25, 0.5, 0.75],
+      }
+    );
 
     observer.observe(section);
 
@@ -163,23 +139,14 @@ const PlanImage = ({
       }
     };
 
-    window.addEventListener(
-      "resize",
-      handleResize
-    );
+    window.addEventListener("resize", handleResize);
 
     return () => {
       observer.disconnect();
 
-      window.removeEventListener(
-        "resize",
-        handleResize
-      );
+      window.removeEventListener("resize", handleResize);
     };
-  }, [
-    isExploring,
-    resetTransform,
-  ]);
+  }, [isExploring, resetTransform]);
 
   const handleImageLoad = () => {
     if (isExploring) return;
@@ -193,9 +160,7 @@ const PlanImage = ({
 
   return (
     <TransformComponent
-      wrapperClass={
-        planWrapperClass
-      }
+      wrapperClass={planWrapperClass}
       contentClass="plan-content"
     >
       <img
@@ -210,47 +175,29 @@ const PlanImage = ({
 };
 
 export default function Plans() {
-  const [
-    activePlan,
-    setActivePlan,
-  ] = useState(0);
+  const [activePlan, setActivePlan] = useState(0);
 
-  const [
-    isPortrait,
-    setIsPortrait,
-  ] = useState(false);
+  const [isPortrait, setIsPortrait] = useState(false);
 
-  const [
-    isDesktop,
-    setIsDesktop,
-  ] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
 
-  const [
-    isExploring,
-    setIsExploring,
-  ] = useState(false);
+  const [isExploring, setIsExploring] = useState(false);
 
   useEffect(() => {
-    const orientationQuery =
-      window.matchMedia(
-        "(orientation: portrait)"
-      );
+    const orientationQuery = window.matchMedia(
+      "(orientation: portrait)"
+    );
 
-    const desktopQuery =
-      window.matchMedia(
-        "(hover: hover) and (pointer: fine)"
-      );
+    const desktopQuery = window.matchMedia(
+      "(hover: hover) and (pointer: fine)"
+    );
 
     const updateOrientation = () => {
-      setIsPortrait(
-        orientationQuery.matches
-      );
+      setIsPortrait(orientationQuery.matches);
     };
 
     const updateDesktop = () => {
-      setIsDesktop(
-        desktopQuery.matches
-      );
+      setIsDesktop(desktopQuery.matches);
 
       setIsExploring(false);
     };
@@ -281,11 +228,6 @@ export default function Plans() {
     };
   }, []);
 
-  /*
-    CUANDO EXPLORAMOS:
-    - bloqueamos el scroll de la página
-    - avisamos al menú superior para que desaparezca
-  */
   useEffect(() => {
     if (!isExploring) {
       document.body.classList.remove(
@@ -298,8 +240,7 @@ export default function Plans() {
     const previousOverflow =
       document.body.style.overflow;
 
-    document.body.style.overflow =
-      "hidden";
+    document.body.style.overflow = "hidden";
 
     document.body.classList.add(
       "plan-exploring-active"
@@ -322,13 +263,11 @@ export default function Plans() {
     setActivePlan(index);
   };
 
-  const planWrapperClass =
-    isExploring
-      ? "plan-wrapper plan-exploring"
-      : "plan-wrapper";
+  const planWrapperClass = isExploring
+    ? "plan-wrapper plan-exploring"
+    : "plan-wrapper";
 
-  const currentPlan =
-    plans[activePlan];
+  const currentPlan = plans[activePlan];
 
   return (
     <section
@@ -336,43 +275,22 @@ export default function Plans() {
       className="relative h-screen w-full overflow-hidden bg-white"
     >
       <TransformWrapper
-        key={`${activePlan}-${
-          isPortrait
-            ? "portrait"
-            : "landscape"
-        }-${
-          isDesktop
-            ? "desktop"
-            : "touch"
-        }`}
+        key={`${activePlan}-${isPortrait ? "portrait" : "landscape"}-${isDesktop ? "desktop" : "touch"}`}
         initialScale={1}
         minScale={1}
         maxScale={4}
         centerOnInit={true}
-
-        /*
-          EL PLANO NO PUEDE SALIR
-          DE LOS LÍMITES DEL VISOR
-        */
         limitToBounds={true}
-
-        /*
-          AL VOLVER A ESCALA 1
-          EL PLANO SE CENTRA
-        */
         centerZoomedOut={true}
-
         velocityAnimation={{
           disabled: true,
         }}
-
         wheel={{
           disabled:
             !isDesktop ||
             !isExploring,
           step: 0.15,
         }}
-
         doubleClick={{
           disabled:
             !isDesktop ||
@@ -380,21 +298,17 @@ export default function Plans() {
           mode: "reset",
           animationTime: 400,
         }}
-
         panning={{
           disabled: !isExploring,
           velocityDisabled: true,
         }}
-
         pinch={{
           disabled: !isExploring,
           allowPanning: true,
         }}
       >
         <PlanControls
-          isExploring={
-            isExploring
-          }
+          isExploring={isExploring}
           isDesktop={isDesktop}
           onExit={() =>
             setIsExploring(false)
@@ -404,12 +318,8 @@ export default function Plans() {
         <PlanImage
           src={currentPlan.src}
           name={currentPlan.name}
-          isExploring={
-            isExploring
-          }
-          planWrapperClass={
-            planWrapperClass
-          }
+          isExploring={isExploring}
+          planWrapperClass={planWrapperClass}
         />
       </TransformWrapper>
 
@@ -437,18 +347,17 @@ export default function Plans() {
                 key={plan.src}
                 type="button"
                 onClick={() =>
-                  handleChangePlan(
-                    index
-                  )
+                  handleChangePlan(index)
                 }
-                className={`pointer-events-auto min-w-[150px] whitespace-nowrap rounded-full px-9 py-3 font-[family:var(--font-wix)] text-[10px] font-medium uppercase tracking-[0.14em] shadow-lg transition-all duration-300 sm:min-w-[170px] sm:px-10 sm:text-[11px] ${
-                  activePlan ===
-                  index
+                className={`pointer-events-auto min-w-[145px] whitespace-nowrap rounded-full px-7 py-3 font-[family:var(--font-wix)] font-medium uppercase shadow-lg transition-all duration-300 sm:min-w-[155px] sm:px-8 lg:min-w-[165px] lg:px-9 ${
+                  activePlan === index
                     ? "bg-black text-white"
                     : "bg-white text-black hover:bg-black hover:text-white"
                 }`}
               >
-                {plan.name}
+                <span className="plan-selector-text">
+                  {plan.name}
+                </span>
               </button>
             )
           )}
@@ -456,6 +365,20 @@ export default function Plans() {
       )}
 
       <style jsx global>{`
+        /*
+          TEXTO INTERNO DE BOTONES
+        */
+
+        .plan-selector-text {
+          font-size: 9px !important;
+          line-height: 1 !important;
+          letter-spacing: 0.1em !important;
+        }
+
+        /*
+          CONTENEDOR
+        */
+
         .plan-wrapper {
           width: 100% !important;
           height: 100% !important;
@@ -467,7 +390,6 @@ export default function Plans() {
 
         .plan-wrapper.plan-exploring {
           cursor: grab !important;
-
           touch-action: none !important;
         }
 
@@ -475,7 +397,15 @@ export default function Plans() {
           cursor: grabbing !important;
         }
 
+        /*
+          EL CONTENIDO OCUPA TODA LA PANTALLA
+          Y CENTRA EL PLANO
+        */
+
         .plan-content {
+          width: 100vw !important;
+          height: 100vh !important;
+
           display: flex !important;
 
           align-items: center;
@@ -483,48 +413,28 @@ export default function Plans() {
         }
 
         /*
-          HORIZONTAL
+          EL PNG SIEMPRE SE MUESTRA
+          AL ANCHO DE LA PANTALLA
+
+          NO USA LA ALTURA PARA CALCULAR
+          SU TAMAÑO.
         */
 
-        @media (orientation: landscape) {
-          .plan-content {
-            width: 100vw !important;
-            height: 100vh !important;
-          }
+        .plan-image {
+          display: block;
 
-          .plan-image {
-            width: 100vw;
-            height: auto;
+          width: 100vw !important;
+          height: auto !important;
 
-            max-width: none;
+          max-width: 100vw !important;
+          max-height: none !important;
 
-            user-select: none;
-            -webkit-user-select: none;
-            -webkit-user-drag: none;
-          }
-        }
+          object-fit: contain;
 
-        /*
-          VERTICAL
-        */
+          user-select: none;
 
-        @media (orientation: portrait) {
-          .plan-content {
-            width: max-content !important;
-            height: 100vh !important;
-          }
-
-          .plan-image {
-            width: auto;
-            height: 100vh;
-
-            max-width: none;
-            max-height: none;
-
-            user-select: none;
-            -webkit-user-select: none;
-            -webkit-user-drag: none;
-          }
+          -webkit-user-select: none;
+          -webkit-user-drag: none;
         }
       `}</style>
     </section>

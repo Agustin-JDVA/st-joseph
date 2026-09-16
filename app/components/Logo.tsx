@@ -9,12 +9,16 @@ type LogoProps = {
 export default function Logo({
   projectMode = false,
 }: LogoProps) {
-  const [useBlackLogo, setUseBlackLogo] = useState(false);
+  const [useBlackLogo, setUseBlackLogo] = useState(true);
 
   useEffect(() => {
     const updateLogo = () => {
+      /*
+        PORTADA INICIAL:
+        LOGO NEGRO
+      */
       if (!projectMode) {
-        setUseBlackLogo(false);
+        setUseBlackLogo(true);
         return;
       }
 
@@ -23,7 +27,7 @@ export default function Logo({
         "info",
         "renders",
         "planos",
-        "tours",
+        "compartir",
       ];
 
       const viewportCenter = window.innerHeight / 2;
@@ -46,22 +50,52 @@ export default function Logo({
         }
       }
 
-      // NEGRO SOLO EN CONCEPTO
-      // EN PLANOS EL LOGO ES BLANCO
-      setUseBlackLogo(currentSection === "info");
+      /*
+        COLORES DEL LOGO JDVA
+
+        INICIO:      NEGRO
+        CONCEPTO:    NEGRO
+        RENDERS:     BLANCO
+        PLANOS:      BLANCO
+        COMPARTIR:   NEGRO
+      */
+
+      const blackSections = [
+        "inicio",
+        "info",
+        "compartir",
+      ];
+
+      setUseBlackLogo(
+        blackSections.includes(currentSection)
+      );
     };
 
     updateLogo();
 
-    window.addEventListener("scroll", updateLogo, {
-      passive: true,
-    });
+    window.addEventListener(
+      "scroll",
+      updateLogo,
+      {
+        passive: true,
+      }
+    );
 
-    window.addEventListener("resize", updateLogo);
+    window.addEventListener(
+      "resize",
+      updateLogo
+    );
 
     return () => {
-      window.removeEventListener("scroll", updateLogo);
-      window.removeEventListener("resize", updateLogo);
+      window.removeEventListener(
+        "scroll",
+        updateLogo
+      );
+
+      window.removeEventListener(
+        "resize",
+        updateLogo
+      );
     };
   }, [projectMode]);
 
@@ -87,7 +121,9 @@ export default function Logo({
               ? "text-[7px] sm:text-[8px] md:text-[9px]"
               : "relative -top-1 text-[9px] sm:text-[10px] md:text-[11px]"
           } ${
-            useBlackLogo ? "text-black" : "text-white"
+            useBlackLogo
+              ? "text-black"
+              : "text-white"
           }`}
         >
           Proyecta

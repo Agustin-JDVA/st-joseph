@@ -9,7 +9,7 @@ type MenuProps = {
 export default function Menu({
   onExitProject,
 }: MenuProps) {
-  const [darkText, setDarkText] = useState(false);
+  const [darkText, setDarkText] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -22,19 +22,16 @@ export default function Menu({
         "compartir",
       ];
 
-      const viewportCenter =
-        window.innerHeight / 2;
+      const viewportCenter = window.innerHeight / 2;
 
       let currentSection = "";
 
       for (const id of sectionIds) {
-        const section =
-          document.getElementById(id);
+        const section = document.getElementById(id);
 
         if (!section) continue;
 
-        const rect =
-          section.getBoundingClientRect();
+        const rect = section.getBoundingClientRect();
 
         if (
           rect.top <= viewportCenter &&
@@ -46,17 +43,18 @@ export default function Menu({
       }
 
       /*
-        TEXTO NEGRO EN:
+        NEGRO EN:
+        - INICIO
         - CONCEPTO
         - COMPARTIR
 
-        TEXTO BLANCO EN:
-        - INICIO
+        BLANCO EN:
         - RENDERS
         - PLANOS
       */
       setDarkText(
-        currentSection === "info" ||
+        currentSection === "inicio" ||
+          currentSection === "info" ||
           currentSection === "compartir"
       );
     };
@@ -68,18 +66,11 @@ export default function Menu({
 
     updateColor();
 
-    window.addEventListener(
-      "scroll",
-      handleScroll,
-      {
-        passive: true,
-      }
-    );
+    window.addEventListener("scroll", handleScroll, {
+      passive: true,
+    });
 
-    window.addEventListener(
-      "resize",
-      updateColor
-    );
+    window.addEventListener("resize", updateColor);
 
     return () => {
       window.removeEventListener(
@@ -121,36 +112,36 @@ export default function Menu({
           }`}
         >
           <a
-            className="pointer-events-auto transition-opacity duration-200 hover:opacity-55"
             href="#inicio"
+            className="pointer-events-auto transition-opacity duration-200 hover:opacity-55"
           >
             Inicio
           </a>
 
           <a
-            className="pointer-events-auto transition-opacity duration-200 hover:opacity-55"
             href="#info"
+            className="pointer-events-auto transition-opacity duration-200 hover:opacity-55"
           >
             Concepto
           </a>
 
           <a
-            className="pointer-events-auto transition-opacity duration-200 hover:opacity-55"
             href="#renders"
+            className="pointer-events-auto transition-opacity duration-200 hover:opacity-55"
           >
             Renders
           </a>
 
           <a
-            className="pointer-events-auto transition-opacity duration-200 hover:opacity-55"
             href="#planos"
+            className="pointer-events-auto transition-opacity duration-200 hover:opacity-55"
           >
             Planos
           </a>
 
           <a
-            className="pointer-events-auto transition-opacity duration-200 hover:opacity-55"
             href="#compartir"
+            className="pointer-events-auto transition-opacity duration-200 hover:opacity-55"
           >
             Compartir
           </a>
@@ -177,7 +168,6 @@ export default function Menu({
           MENÚ VERTICAL
           ========================================= */}
 
-      {/* FONDO OSCURO */}
       <button
         type="button"
         aria-label="Cerrar menú"
@@ -238,10 +228,7 @@ export default function Menu({
         </div>
       </button>
 
-      {/* =========================================
-          MENÚ DESPLEGADO
-          ========================================= */}
-
+      {/* MENÚ ABIERTO */}
       <div
         className={`project-menu-portrait fixed right-4 top-14 z-[9999998] w-[280px] text-white transition-all duration-300 sm:right-5 sm:top-16 sm:w-[320px] ${
           isOpen
@@ -254,9 +241,7 @@ export default function Menu({
             <a
               href="#inicio"
               onClick={closeMenu}
-              className={
-                portraitLinkClass
-              }
+              className={portraitLinkClass}
             >
               Inicio
             </a>
@@ -264,9 +249,7 @@ export default function Menu({
             <a
               href="#info"
               onClick={closeMenu}
-              className={
-                portraitLinkClass
-              }
+              className={portraitLinkClass}
             >
               Concepto
             </a>
@@ -274,9 +257,7 @@ export default function Menu({
             <a
               href="#renders"
               onClick={closeMenu}
-              className={
-                portraitLinkClass
-              }
+              className={portraitLinkClass}
             >
               Renders
             </a>
@@ -284,9 +265,7 @@ export default function Menu({
             <a
               href="#planos"
               onClick={closeMenu}
-              className={
-                portraitLinkClass
-              }
+              className={portraitLinkClass}
             >
               Planos
             </a>
@@ -294,20 +273,16 @@ export default function Menu({
             <a
               href="#compartir"
               onClick={closeMenu}
-              className={
-                portraitLinkClass
-              }
+              className={portraitLinkClass}
             >
               Compartir
             </a>
           </div>
 
-          {/* SEPARADOR */}
           <div className="flex h-6 w-full items-center justify-end">
             <div className="h-px w-20 bg-white/30" />
           </div>
 
-          {/* SALIR */}
           <button
             type="button"
             onClick={handleExit}
@@ -338,12 +313,6 @@ export default function Menu({
             display: none;
           }
         }
-
-        /*
-          AL EXPLORAR EL PLANO
-          DESAPARECEN LOS MENÚS.
-          EL LOGO JDVA PERMANECE.
-        */
 
         body.plan-exploring-active
           .project-menu-landscape,

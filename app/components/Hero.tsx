@@ -14,13 +14,9 @@ export default function Hero({
       id="inicio"
       className="relative h-screen w-full overflow-hidden bg-black"
     >
-      {/* =========================================
-          PORTADA
-          ========================================= */}
-
       {introMode ? (
         <>
-          {/* IMAGEN DE PORTADA - SIN ZOOM */}
+          {/* PORTADA INICIAL */}
           <img
             src="/renders/render-01.jpg"
             alt="St. JOSEPH"
@@ -28,7 +24,7 @@ export default function Hero({
             draggable={false}
           />
 
-          {/* NOMBRE DEL PROYECTO */}
+          {/* LOGO ST. JOSEPH */}
           <div
             className={`absolute left-1/2 top-10 z-10 -translate-x-1/2 transition-all duration-[750ms] ease-out sm:top-12 md:top-14 lg:top-16 ${
               isEntering
@@ -36,9 +32,12 @@ export default function Hero({
                 : "translate-y-0 opacity-100"
             }`}
           >
-            <h1 className="whitespace-nowrap font-[family:var(--font-wix)] text-3xl font-extrabold leading-none tracking-[0.04em] text-black sm:text-5xl sm:tracking-[0.05em] md:text-6xl lg:text-7xl lg:tracking-[0.06em]">
-              St. JOSEPH
-            </h1>
+            <img
+              src="/logo/st-joseph.png"
+              alt="St. JOSEPH"
+              className="h-auto w-[220px] object-contain sm:w-[280px] md:w-[340px] lg:w-[400px]"
+              draggable={false}
+            />
           </div>
 
           {/* BOTÓN INGRESAR */}
@@ -61,10 +60,7 @@ export default function Hero({
         </>
       ) : (
         <>
-          {/* =========================================
-              VIDEO DE INICIO
-              ========================================= */}
-
+          {/* VIDEO DE INICIO */}
           <video
             className="absolute inset-0 h-full w-full object-cover"
             autoPlay
@@ -81,41 +77,33 @@ export default function Hero({
           </video>
 
           {/* DESLIZA PARA RECORRER */}
-          <a
-            href="#info"
-            className="interior-scroll-enter absolute bottom-10 left-1/2 z-20 flex -translate-x-1/2 flex-col items-center text-white sm:bottom-12 md:bottom-14"
-            aria-label="Ir al concepto"
-          >
-            <span className="whitespace-nowrap font-[family:var(--font-wix)] text-[10px] font-medium uppercase tracking-[0.24em] text-white drop-shadow-md sm:text-[11px] md:text-[13px]">
-              Desliza para recorrer
-            </span>
+          <div className="pointer-events-none absolute inset-x-0 bottom-10 z-20 flex justify-center sm:bottom-12 md:bottom-14">
+            <a
+              href="#info"
+              className="interior-scroll-enter pointer-events-auto flex flex-col items-center text-white"
+              aria-label="Ir al concepto"
+            >
+              <span className="whitespace-nowrap font-[family:var(--font-wix)] text-[10px] font-medium uppercase tracking-[0.24em] text-white drop-shadow-md sm:text-[11px] md:text-[13px]">
+                Desliza para recorrer
+              </span>
 
-            <div className="scroll-arrow mt-4 flex flex-col items-center">
-              <div className="mb-1 h-1.5 w-1.5 rounded-full bg-white" />
+              <div className="scroll-arrow mt-4 flex flex-col items-center">
+                <div className="mb-1 h-1.5 w-1.5 rounded-full bg-white" />
 
-              <div className="h-10 w-px bg-white/90 md:h-12" />
+                <div className="h-10 w-px bg-white/90 md:h-12" />
 
-              <div className="-mt-[6px] h-3 w-3 rotate-45 border-b-2 border-r-2 border-white" />
-            </div>
-          </a>
+                <div className="-mt-[6px] h-3 w-3 rotate-45 border-b-2 border-r-2 border-white" />
+              </div>
+            </a>
+          </div>
         </>
       )}
 
       <style jsx global>{`
-        /*
-          ENTRADA DEL TEXTO
-          "DESLIZA PARA RECORRER"
-        */
-
         .interior-scroll-enter {
           animation:
             interiorContentEnter 1300ms
-              cubic-bezier(
-                0.22,
-                1,
-                0.36,
-                1
-              )
+              cubic-bezier(0.22, 1, 0.36, 1)
               both,
             scrollInvitationFade 2.4s
               ease-in-out 1300ms infinite;
@@ -134,7 +122,7 @@ export default function Hero({
         @keyframes interiorContentEnter {
           0% {
             opacity: 0;
-            transform: translate(-50%, 14px);
+            transform: translateY(14px);
           }
 
           35% {
@@ -143,7 +131,7 @@ export default function Hero({
 
           100% {
             opacity: 1;
-            transform: translate(-50%, 0);
+            transform: translateY(0);
           }
         }
 
