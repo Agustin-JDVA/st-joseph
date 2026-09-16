@@ -162,10 +162,8 @@ export default function ShareSection() {
           position: absolute;
           top: 0;
           left: 0;
-
           width: 100%;
           height: 50vh;
-
           background: #ffffff;
         }
 
@@ -178,96 +176,53 @@ export default function ShareSection() {
 
         .share-left-top {
           position: absolute;
-
           left: 14.2%;
           top: 31%;
         }
 
         .share-right-top {
           position: absolute;
-
           left: 47%;
           top: 31%;
-
           width: 38.5%;
         }
 
         .share-project-title {
           margin: 0;
-
-          font-family:
-            var(--font-wix),
-            Arial,
-            sans-serif;
-
-          font-size: clamp(
-            20px,
-            1.45vw,
-            28px
-          );
-
+          font-family: var(--font-wix), Arial, sans-serif;
+          font-size: clamp(20px, 1.45vw, 28px);
           font-weight: 700;
           line-height: 0.95;
-
           letter-spacing: -0.03em;
-
           text-transform: uppercase;
-
           color: #000000;
         }
 
         .share-project-subtitle {
           margin: 3px 0 0 0;
-
-          font-family:
-            var(--font-wix),
-            Arial,
-            sans-serif;
-
-          font-size: clamp(
-            10px,
-            0.65vw,
-            12px
-          );
-
+          font-family: var(--font-wix), Arial, sans-serif;
+          font-size: clamp(10px, 0.65vw, 12px);
           font-weight: 400;
           line-height: 1.2;
-
           letter-spacing: -0.01em;
-
           color: #000000;
         }
 
         .share-project-heading {
           margin: 0;
-
-          font-family:
-            var(--font-wix),
-            Arial,
-            sans-serif;
-
-          font-size: clamp(
-            16px,
-            1.05vw,
-            20px
-          );
-
+          font-family: var(--font-wix), Arial, sans-serif;
+          font-size: clamp(16px, 1.05vw, 20px);
           font-weight: 700;
           line-height: 1.15;
-
           letter-spacing: -0.02em;
-
           color: #000000;
         }
 
         .project-actions {
           display: flex;
           flex-direction: column;
-
           width: 100%;
-
           gap: 0;
-
           margin-top: 10px;
         }
 
@@ -276,7 +231,6 @@ export default function ShareSection() {
           -webkit-appearance: none !important;
 
           display: flex !important;
-
           align-items: center !important;
           justify-content: space-between !important;
 
@@ -284,38 +238,18 @@ export default function ShareSection() {
 
           margin: 0 !important;
 
-          padding:
-            clamp(
-              6px,
-              0.5vw,
-              8px
-            )
-            0 !important;
+          padding: clamp(6px, 0.5vw, 8px) 0 !important;
 
           border: 0 !important;
-
-          border-bottom:
-            1px solid
-            rgba(
-              0,
-              0,
-              0,
-              0.55
-            ) !important;
-
+          border-bottom: 1px solid rgba(0, 0, 0, 0.55) !important;
           border-radius: 0 !important;
 
           background: transparent !important;
-
           color: #000000 !important;
 
-          font-family:
-            var(--font-wix),
-            Arial,
-            sans-serif !important;
+          font-family: var(--font-wix), Arial, sans-serif !important;
 
           text-decoration: none !important;
-
           text-align: left !important;
 
           cursor: pointer;
@@ -333,29 +267,18 @@ export default function ShareSection() {
           margin: 0 !important;
           padding: 0 !important;
 
-          font-family:
-            var(--font-wix),
-            Arial,
-            sans-serif !important;
+          font-family: var(--font-wix), Arial, sans-serif !important;
 
-          font-size:
-            clamp(
-              11px,
-              0.84vw,
-              16px
-            ) !important;
+          font-size: clamp(11px, 0.84vw, 16px) !important;
 
           font-weight: 400 !important;
-
           font-style: normal !important;
 
           line-height: 1 !important;
 
-          letter-spacing:
-            -0.01em !important;
+          letter-spacing: -0.01em !important;
 
-          text-transform:
-            uppercase !important;
+          text-transform: uppercase !important;
 
           color: #000000 !important;
 
@@ -365,23 +288,11 @@ export default function ShareSection() {
         .project-action-arrow {
           flex: 0 0 auto;
 
-          margin-left:
-            clamp(
-              10px,
-              1.25vw,
-              24px
-            );
+          margin-left: clamp(10px, 1.25vw, 24px);
 
-          font-family:
-            Arial,
-            sans-serif !important;
+          font-family: Arial, sans-serif !important;
 
-          font-size:
-            clamp(
-              11px,
-              0.84vw,
-              16px
-            ) !important;
+          font-size: clamp(11px, 0.84vw, 16px) !important;
 
           font-weight: 400 !important;
 
@@ -392,7 +303,6 @@ export default function ShareSection() {
 
         .share-left-bottom {
           position: absolute;
-
           left: 14.2%;
           top: 67%;
         }
@@ -400,16 +310,9 @@ export default function ShareSection() {
         .share-jdva-title {
           margin: 0;
 
-          font-family:
-            var(--font-wix),
-            Arial,
-            sans-serif;
+          font-family: var(--font-wix), Arial, sans-serif;
 
-          font-size: clamp(
-            18px,
-            1.2vw,
-            23px
-          );
+          font-size: clamp(18px, 1.2vw, 23px);
 
           font-weight: 700;
 
@@ -425,16 +328,9 @@ export default function ShareSection() {
         .share-jdva-subtitle {
           margin: 4px 0 0 0;
 
-          font-family:
-            var(--font-wix),
-            Arial,
-            sans-serif;
+          font-family: var(--font-wix), Arial, sans-serif;
 
-          font-size: clamp(
-            10px,
-            0.65vw,
-            12px
-          );
+          font-size: clamp(10px, 0.65vw, 12px);
 
           font-weight: 400;
 
@@ -447,58 +343,32 @@ export default function ShareSection() {
 
         .share-right-bottom {
           position: absolute;
-
           left: 47%;
           top: 67%;
-
           width: 38.5%;
         }
 
         .jdva-actions {
           display: flex;
-
           width: 100%;
-
           flex-direction: column;
-
           gap: 7px;
         }
 
         .jdva-action {
           display: flex;
-
           align-items: center;
           justify-content: space-between;
 
           width: 100%;
 
-          padding:
-            clamp(
-              4px,
-              0.3vw,
-              5px
-            )
-            0;
+          padding: clamp(4px, 0.3vw, 5px) 0;
 
-          border-bottom:
-            1px solid
-            rgba(
-              0,
-              0,
-              0,
-              0.55
-            );
+          border-bottom: 1px solid rgba(0, 0, 0, 0.55);
 
-          font-family:
-            var(--font-wix),
-            Arial,
-            sans-serif;
+          font-family: var(--font-wix), Arial, sans-serif;
 
-          font-size: clamp(
-            9px,
-            0.65vw,
-            12px
-          );
+          font-size: clamp(9px, 0.65vw, 12px);
 
           font-weight: 400;
 
@@ -520,22 +390,11 @@ export default function ShareSection() {
         }
 
         .jdva-action-arrow {
-          margin-left:
-            clamp(
-              10px,
-              1.25vw,
-              24px
-            );
+          margin-left: clamp(10px, 1.25vw, 24px);
 
-          font-family:
-            Arial,
-            sans-serif;
+          font-family: Arial, sans-serif;
 
-          font-size: clamp(
-            11px,
-            0.78vw,
-            15px
-          );
+          font-size: clamp(11px, 0.78vw, 15px);
 
           font-weight: 400;
 
@@ -544,7 +403,6 @@ export default function ShareSection() {
 
         .share-video {
           position: absolute;
-
           left: 0;
           bottom: 0;
 
@@ -552,7 +410,6 @@ export default function ShareSection() {
           height: 50vh;
 
           display: flex;
-
           align-items: center;
           justify-content: center;
 
@@ -568,19 +425,15 @@ export default function ShareSection() {
           height: 100%;
 
           object-fit: cover;
-
           object-position: center center;
         }
 
         /*
-          PANTALLAS INTERMEDIAS
+          TABLET / PANTALLA INTERMEDIA
+          SE CONSERVA IGUAL
         */
 
-        @media (
-          max-width: 1200px
-        ) and (
-          orientation: landscape
-        ) {
+        @media (max-width: 1200px) and (orientation: landscape) {
           .share-left-top {
             left: 8%;
           }
@@ -598,13 +451,12 @@ export default function ShareSection() {
           .share-right-bottom {
             left: 47%;
             top: 75%;
-
             width: 46%;
           }
         }
 
         /*
-          CELULAR / PANTALLA ANGOSTA
+          RESPONSIVE GENERAL EXISTENTE
         */
 
         @media (max-width: 768px) {
@@ -618,177 +470,196 @@ export default function ShareSection() {
           .share-left-top {
             left: 7%;
             top: 7%;
-
             width: 86%;
           }
 
           .share-right-top {
             left: 7%;
             top: 26%;
-
             width: 86%;
           }
 
+          .project-actions {
+            margin-top: 2px;
+          }
+
+          .share-left-bottom {
+            left: 7%;
+            top: 61%;
+            width: 86%;
+          }
+
+          .share-right-bottom {
+            left: 7%;
+            top: 76%;
+            width: 86%;
+          }
+
+          .share-project-title {
+            font-size: clamp(15px, 4.2vw, 18px);
+          }
+
+          .share-project-subtitle {
+            width: 100%;
+            max-width: 300px;
+
+            font-size: clamp(7px, 2.15vw, 9px);
+
+            line-height: 1.25;
+          }
+
+          .share-project-heading {
+            font-size: clamp(10px, 3vw, 13px);
+
+            line-height: 1.2;
+          }
+
+          .project-action {
+            padding: clamp(4px, 1.5vw, 6px) 0 !important;
+          }
+
+          .project-action-text {
+            font-size: clamp(8px, 2.55vw, 11px) !important;
+          }
+
+          .project-action-arrow {
+            margin-left: 10px;
+
+            font-size: clamp(9px, 2.8vw, 12px) !important;
+          }
+
+          .share-jdva-title {
+            font-size: clamp(14px, 4vw, 17px);
+          }
+
+          .share-jdva-subtitle {
+            font-size: clamp(7px, 2.15vw, 9px);
+          }
+
+          .jdva-actions {
+            gap: clamp(3px, 1vw, 5px);
+          }
+
+          .jdva-action {
+            padding: clamp(3px, 1vw, 4px) 0;
+
+            font-size: clamp(7px, 2.3vw, 10px);
+          }
+
+          .jdva-action-arrow {
+            margin-left: 10px;
+
+            font-size: clamp(9px, 2.8vw, 12px);
+          }
+        }
+
+        /*
+          ==================================================
+          AJUSTES EXCLUSIVOS PARA CELULARES
+          ==================================================
+
+          NO AFECTA TABLETS NI ESCRITORIO.
+        */
+
+        @media (max-width: 600px) {
           /*
-            ACERCAMOS LOS BOTONES
-            AL TEXTO SUPERIOR.
+            ACHICAMOS UN POCO MÁS
+            TODOS LOS TEXTOS
+          */
+
+          .share-project-title {
+            font-size: 14px;
+          }
+
+          .share-project-subtitle {
+            font-size: 7px;
+            line-height: 1.2;
+          }
+
+          .share-project-heading {
+            font-size: 9px;
+            line-height: 1.15;
+          }
+
+          /*
+            COMPARTIR / DESCARGAR
+            MÁS COMPACTOS
           */
 
           .project-actions {
             margin-top: 2px;
           }
 
-          /*
-            TODO EL CONTENIDO INFERIOR
-            SUBE.
-          */
-
-          .share-left-bottom {
-            left: 7%;
-            top: 61%;
-
-            width: 86%;
-          }
-
-          /*
-            LOS LINKS QUEDAN MÁS ABAJO
-            RESPECTO DE JDVA, PERO EL
-            CONJUNTO GENERAL SUBE.
-          */
-
-          .share-right-bottom {
-            left: 7%;
-            top: 76%;
-
-            width: 86%;
-          }
-
-          .share-project-title {
-            font-size:
-              clamp(
-                15px,
-                4.2vw,
-                18px
-              );
-          }
-
-          .share-project-subtitle {
-            width: 100%;
-
-            max-width: 300px;
-
-            font-size:
-              clamp(
-                7px,
-                2.15vw,
-                9px
-              );
-
-            line-height: 1.25;
-          }
-
-          .share-project-heading {
-            font-size:
-              clamp(
-                10px,
-                3vw,
-                13px
-              );
-
-            line-height: 1.2;
-          }
-
           .project-action {
-            padding:
-              clamp(
-                4px,
-                1.5vw,
-                6px
-              )
-              0 !important;
+            padding: 3px 0 !important;
           }
 
           .project-action-text {
-            font-size:
-              clamp(
-                8px,
-                2.55vw,
-                11px
-              ) !important;
-
-            letter-spacing:
-              -0.01em !important;
+            font-size: 7.5px !important;
+            line-height: 1 !important;
           }
 
           .project-action-arrow {
-            margin-left: 10px;
+            font-size: 8px !important;
+            margin-left: 8px;
+          }
 
-            font-size:
-              clamp(
-                9px,
-                2.8vw,
-                12px
-              ) !important;
+          /*
+            JDVA UN POCO MÁS CHICO
+          */
+
+          .share-left-bottom {
+            top: 59%;
           }
 
           .share-jdva-title {
-            font-size:
-              clamp(
-                14px,
-                4vw,
-                17px
-              );
+            font-size: 12px;
           }
 
           .share-jdva-subtitle {
-            font-size:
-              clamp(
-                7px,
-                2.15vw,
-                9px
-              );
+            margin-top: 2px;
+
+            font-size: 7px;
           }
 
+          /*
+            MÁS ESPACIO ENTRE JDVA
+            Y SITIO WEB
+          */
+
+          .share-right-bottom {
+            top: 77%;
+          }
+
+          /*
+            SITIO WEB
+            REDES SOCIALES
+            LINKEDIN
+
+            MÁS JUNTOS ENTRE ELLOS
+          */
+
           .jdva-actions {
-            gap:
-              clamp(
-                3px,
-                1vw,
-                5px
-              );
+            gap: 1px;
           }
 
           .jdva-action {
-            padding:
-              clamp(
-                3px,
-                1vw,
-                4px
-              )
-              0;
+            padding: 2px 0;
 
-            font-size:
-              clamp(
-                7px,
-                2.3vw,
-                10px
-              );
+            font-size: 7px;
+
+            line-height: 1;
           }
 
           .jdva-action-arrow {
-            margin-left: 10px;
+            margin-left: 8px;
 
-            font-size:
-              clamp(
-                9px,
-                2.8vw,
-                12px
-              );
+            font-size: 8px;
           }
         }
 
         /*
-          CELULAR MUY CHICO
+          CELULARES MUY ANGOSTOS
         */
 
         @media (max-width: 390px) {
@@ -797,47 +668,60 @@ export default function ShareSection() {
           }
 
           .share-right-top {
-            top: 24%;
-          }
-
-          .project-actions {
-            margin-top: 1px;
-          }
-
-          .share-left-bottom {
-            top: 60%;
-          }
-
-          .share-right-bottom {
-            top: 76%;
+            top: 23%;
           }
 
           .share-project-title {
-            font-size: 15px;
+            font-size: 13px;
+          }
+
+          .share-project-subtitle {
+            font-size: 6.5px;
           }
 
           .share-project-heading {
-            font-size: 10px;
+            font-size: 8.5px;
           }
 
           .project-action-text {
-            font-size: 8px !important;
+            font-size: 7px !important;
+          }
+
+          .share-left-bottom {
+            top: 58%;
+          }
+
+          .share-jdva-title {
+            font-size: 11px;
+          }
+
+          .share-jdva-subtitle {
+            font-size: 6.5px;
+          }
+
+          .share-right-bottom {
+            top: 77%;
+          }
+
+          .jdva-actions {
+            gap: 1px;
           }
 
           .jdva-action {
-            font-size: 7px;
+            padding: 2px 0;
+
+            font-size: 6.5px;
           }
         }
 
         /*
           CELULAR HORIZONTAL
+
+          TAMBIÉN ES EXCLUSIVO PARA
+          PANTALLAS CON POCA ALTURA.
         */
 
-        @media (
-          orientation: landscape
-        ) and (
-          max-height: 650px
-        ) {
+        @media (orientation: landscape) and (max-height: 500px) {
           .share-left-top,
           .share-right-top,
           .share-left-bottom,
@@ -845,94 +729,62 @@ export default function ShareSection() {
             transform: none;
           }
 
-          /*
-            COMPARTÍ / DESCARGA SUBEN
-            CONTRA EL TEXTO PRINCIPAL.
-          */
-
-          .project-actions {
-            margin-top: 2px;
-          }
-
-          /*
-            JDVA SUBE CON EL CONJUNTO.
-          */
-
-          .share-left-bottom {
-            top: 64%;
-          }
-
-          /*
-            SITIO WEB / REDES / LINKEDIN
-            QUEDAN UN POCO MÁS ABAJO
-            RESPECTO A JDVA.
-          */
-
-          .share-right-bottom {
-            top: 73%;
-          }
-
           .share-project-title {
-            font-size:
-              clamp(
-                13px,
-                4vh,
-                18px
-              );
+            font-size: 12px;
           }
 
           .share-project-subtitle {
-            font-size:
-              clamp(
-                7px,
-                2vh,
-                9px
-              );
+            font-size: 6.5px;
           }
 
           .share-project-heading {
-            font-size:
-              clamp(
-                9px,
-                3vh,
-                12px
-              );
+            font-size: 8px;
+          }
+
+          .project-actions {
+            margin-top: 1px;
+          }
+
+          .project-action {
+            padding: 2px 0 !important;
           }
 
           .project-action-text {
-            font-size:
-              clamp(
-                7px,
-                2.4vh,
-                10px
-              ) !important;
+            font-size: 7px !important;
+          }
+
+          .project-action-arrow {
+            font-size: 8px !important;
+          }
+
+          .share-left-bottom {
+            top: 59%;
           }
 
           .share-jdva-title {
-            font-size:
-              clamp(
-                12px,
-                3.8vh,
-                16px
-              );
+            font-size: 11px;
           }
 
           .share-jdva-subtitle {
-            font-size:
-              clamp(
-                7px,
-                2vh,
-                9px
-              );
+            font-size: 6.5px;
+          }
+
+          .share-right-bottom {
+            top: 76%;
+          }
+
+          .jdva-actions {
+            gap: 1px;
           }
 
           .jdva-action {
-            font-size:
-              clamp(
-                7px,
-                2.1vh,
-                9px
-              );
+            padding: 2px 0;
+
+            font-size: 6.5px;
+          }
+
+          .jdva-action-arrow {
+            font-size: 8px;
           }
         }
       `}</style>
