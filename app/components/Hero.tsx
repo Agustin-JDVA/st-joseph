@@ -2,6 +2,7 @@
 
 import {
   useEffect,
+  useRef,
   useState,
 } from "react";
 
@@ -11,26 +12,122 @@ type HeroProps = {
   onEnter?: () => void;
 };
 
+type VideoWithFrameCallback =
+  HTMLVideoElement & {
+    requestVideoFrameCallback?: (
+      callback: () => void
+    ) => number;
+  };
+
 export default function Hero({
   introMode = false,
   isEntering = false,
   onEnter,
 }: HeroProps) {
   const [
-    hasVideoStarted,
-    setHasVideoStarted,
+    firstVideoFrameReady,
+    setFirstVideoFrameReady,
   ] = useState(false);
 
+  const [
+    loaderCanAppear,
+    setLoaderCanAppear,
+  ] = useState(false);
+
+  const frameCallbackRequested =
+    useRef(false);
+
   /*
-    SI VOLVEMOS A LA PORTADA,
-    PREPARAMOS NUEVAMENTE EL
-    INDICADOR PARA LA PRÓXIMA ENTRADA.
+    CUANDO ESTAMOS EN LA PORTADA,
+    DEJAMOS TODO PREPARADO PARA
+    UNA NUEVA ENTRADA.
   */
   useEffect(() => {
-    if (introMode) {
-      setHasVideoStarted(false);
-    }
+    if (!introMode) return;
+
+    setFirstVideoFrameReady(false);
+    setLoaderCanAppear(false);
+
+    frameCallbackRequested.current =
+      false;
   }, [introMode]);
+
+  /*
+    HERO PASA DE PORTADA A VIDEO
+    APROXIMADAMENTE 2 SEGUNDOS
+    ANTES DE QUE TERMINE LA
+    TRANSICIÓN DE NUBES.
+
+    POR ESO EL LOADER NO SE
+    HABILITA INMEDIATAMENTE.
+
+    APARECE RECIÉN CUANDO LAS
+    NUBES YA DEBERÍAN HABER
+    TERMINADO.
+  */
+  useEffect(() => {
+    if (introMode) return;
+
+    const timer =
+      window.setTimeout(() => {
+        setLoaderCanAppear(true);
+      }, 2000);
+
+    return () => {
+      window.clearTimeout(timer);
+    };
+  }, [introMode]);
+
+  /*
+    NO TOMAMOS "PLAYING" COMO
+    VIDEO LISTO.
+
+    PEDIMOS AL NAVEGADOR QUE NOS
+    AVISE CUANDO REALMENTE HAYA
+    RENDERIZADO UN FRAME.
+  */
+  const handleVideoPlaying = (
+    event: React.SyntheticEvent<
+      HTMLVideoElement
+    >
+  ) => {
+    if (
+      frameCallbackRequested.current
+    ) {
+      return;
+    }
+
+    frameCallbackRequested.current =
+      true;
+
+    const video =
+      event.currentTarget as VideoWithFrameCallback;
+
+    if (
+      typeof video.requestVideoFrameCallback ===
+      "function"
+    ) {
+      video.requestVideoFrameCallback(
+        () => {
+          setFirstVideoFrameReady(
+            true
+          );
+        }
+      );
+
+      return;
+    }
+
+    /*
+      FALLBACK PARA NAVEGADORES
+      SIN requestVideoFrameCallback.
+    */
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        setFirstVideoFrameReady(true);
+      });
+    });
+  };
 
   return (
     <section
@@ -46,7 +143,6 @@ export default function Hero({
             draggable={false}
           />
 
-          {/* LOGO ST. JOSEPH */}
           <div
             className={`intro-project-logo absolute left-1/2 z-10 -translate-x-1/2 transition-all duration-[750ms] ease-out ${
               isEntering
@@ -62,7 +158,6 @@ export default function Hero({
             />
           </div>
 
-          {/* BOTÓN INGRESAR */}
           <div
             className={`absolute inset-0 z-10 flex items-center justify-center px-6 transition-all duration-[750ms] ease-out ${
               isEntering
@@ -90,8 +185,8 @@ export default function Hero({
             playsInline
             preload="auto"
             poster="/renders/render-01.jpg"
-            onPlaying={() =>
-              setHasVideoStarted(true)
+            onPlaying={
+              handleVideoPlaying
             }
           >
             <source
@@ -101,18 +196,22 @@ export default function Hero({
           </video>
 
           {/*
-            LOADER SOLO HASTA QUE
-            EL VIDEO EMPIEZA REALMENTE.
+            LOADER:
 
-            CSS DECIDE SI SE MUESTRA
-            SEGÚN EL DISPOSITIVO.
+            SOLO PUEDE APARECER
+            DESPUÉS DE LAS NUBES.
+
+            DESAPARECE CUANDO EL
+            PRIMER FRAME REAL DEL
+            VIDEO FUE RENDERIZADO.
           */}
 
-          {!hasVideoStarted && (
-            <div className="mobile-video-loader">
-              <div className="mobile-video-loader-ring" />
-            </div>
-          )}
+          {loaderCanAppear &&
+            !firstVideoFrameReady && (
+              <div className="mobile-video-loader">
+                <div className="mobile-video-loader-ring" />
+              </div>
+            )}
 
           <div className="pointer-events-none absolute inset-x-0 bottom-10 z-20 flex justify-center sm:bottom-12 md:bottom-14">
             <a
@@ -137,10 +236,6 @@ export default function Hero({
       )}
 
       <style jsx global>{`
-        /*
-          PORTADA
-        */
-
         .intro-project-logo {
           top: clamp(
             24px,
@@ -189,20 +284,16 @@ export default function Hero({
         }
 
         /*
-          LOADER DEL VIDEO
-
-          POR DEFECTO ESTÁ OCULTO:
-          EN PC NO APARECE.
+          LOADER OCULTO EN PC
         */
 
         .mobile-video-loader {
           display: none;
 
           position: absolute;
-
           inset: 0;
 
-          z-index: 15;
+          z-index: 30;
 
           align-items: center;
           justify-content: center;
@@ -221,47 +312,40 @@ export default function Hero({
               255,
               255,
               255,
-              0.3
+              0.28
             );
 
-          border-top-color:
-            rgba(
-              255,
-              255,
-              255,
-              1
-            );
+          border-top-color: #ffffff;
 
           animation:
             mobileVideoLoading
-            0.8s linear infinite;
+            0.75s linear infinite;
 
           filter: drop-shadow(
-            0 2px 4px
+            0 2px 5px
               rgba(
                 0,
                 0,
                 0,
-                0.35
+                0.5
               )
           );
         }
 
         @keyframes mobileVideoLoading {
           from {
-            transform: rotate(0deg);
+            transform:
+              rotate(0deg);
           }
 
           to {
-            transform: rotate(360deg);
+            transform:
+              rotate(360deg);
           }
         }
 
         /*
-          DISPOSITIVOS MÓVILES
-
-          EL LOADER SOLO SE HABILITA
-          EN PANTALLAS TÁCTILES.
+          SOLO DISPOSITIVOS MÓVILES
         */
 
         @media (
@@ -277,7 +361,8 @@ export default function Hero({
         }
 
         /*
-          CELULAR HORIZONTAL
+          PORTADA EN CELULAR
+          HORIZONTAL
         */
 
         @media (
@@ -321,11 +406,6 @@ export default function Hero({
             letter-spacing: 0.13em;
           }
         }
-
-        /*
-          CELULAR HORIZONTAL
-          MUY BAJO
-        */
 
         @media (
           orientation: landscape

@@ -396,7 +396,6 @@ export default function Plans() {
         />
       </TransformWrapper>
 
-      {/* BOTÓN EXPLORAR */}
       {!isExploring && (
         <div className="pointer-events-none absolute inset-0 z-[9997] flex items-center justify-center">
           <button
@@ -411,7 +410,6 @@ export default function Plans() {
         </div>
       )}
 
-      {/* SELECTOR DE PLANTAS */}
       {!isExploring && (
         <div className="plan-selector-wrapper pointer-events-none absolute bottom-8 left-1/2 z-[9998] flex -translate-x-1/2 items-center gap-3 sm:bottom-10">
           {plans.map(
@@ -504,37 +502,39 @@ export default function Plans() {
         }
 
         /*
-          CELULARES / PANTALLAS CHICAS
+          CELULAR
 
-          SOLO ACÁ ACHICAMOS
-          LOS CONTROLES.
+          TEXTO IGUAL.
+          ACHICAMOS LA FORMA.
         */
 
         @media (max-width: 600px) {
           .plan-main-button {
-            width: 172px !important;
-            height: 43px !important;
+            width: 165px !important;
+            height: 40px !important;
 
-            font-size: 9px !important;
+            font-size: 8.5px !important;
 
             letter-spacing:
               0.13em !important;
           }
 
           .plan-selector-wrapper {
-            bottom: 22px !important;
-
-            gap: 6px !important;
+            bottom: 20px !important;
+            gap: 5px !important;
           }
 
           .plan-selector-button {
-            min-width: 112px !important;
+            min-width: 0 !important;
 
-            padding: 9px 14px !important;
+            padding:
+              7px 9px !important;
           }
 
           .plan-selector-text {
             font-size: 7.5px !important;
+
+            line-height: 1 !important;
 
             letter-spacing:
               0.08em !important;
@@ -542,20 +542,36 @@ export default function Plans() {
         }
 
         /*
-          CELULAR HORIZONTAL
+          CELULAR MUY ANGOSTO
+        */
 
-          UN TELÉFONO HORIZONTAL PUEDE
-          TENER MÁS DE 600PX DE ANCHO,
-          POR ESO TAMBIÉN MIRAMOS
-          LA ALTURA DE PANTALLA.
+        @media (max-width: 390px) {
+          .plan-selector-wrapper {
+            gap: 4px !important;
+          }
+
+          .plan-selector-button {
+            min-width: 0 !important;
+
+            padding:
+              6px 7px !important;
+          }
+
+          .plan-selector-text {
+            font-size: 7.5px !important;
+          }
+        }
+
+        /*
+          CELULAR HORIZONTAL
         */
 
         @media (
           orientation: landscape
         ) and (max-height: 500px) {
           .plan-main-button {
-            width: 165px !important;
-            height: 40px !important;
+            width: 158px !important;
+            height: 38px !important;
 
             font-size: 8px !important;
 
@@ -564,19 +580,21 @@ export default function Plans() {
           }
 
           .plan-selector-wrapper {
-            bottom: 14px !important;
-
-            gap: 6px !important;
+            bottom: 12px !important;
+            gap: 5px !important;
           }
 
           .plan-selector-button {
-            min-width: 108px !important;
+            min-width: 0 !important;
 
-            padding: 8px 12px !important;
+            padding:
+              6px 9px !important;
           }
 
           .plan-selector-text {
             font-size: 7px !important;
+
+            line-height: 1 !important;
 
             letter-spacing:
               0.07em !important;
