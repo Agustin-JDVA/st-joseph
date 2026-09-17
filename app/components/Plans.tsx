@@ -422,7 +422,7 @@ export default function Plans() {
                     index
                   )
                 }
-                className={`plan-selector-button pointer-events-auto min-w-[145px] whitespace-nowrap rounded-full px-7 py-3 font-[family:var(--font-wix)] font-medium uppercase shadow-lg transition-all duration-300 sm:min-w-[155px] sm:px-8 lg:min-w-[165px] lg:px-9 ${
+                className={`plan-selector-button pointer-events-auto whitespace-nowrap rounded-full font-[family:var(--font-wix)] font-medium uppercase shadow-lg transition-all duration-300 ${
                   activePlan ===
                   index
                     ? "bg-black text-white"
@@ -439,9 +439,22 @@ export default function Plans() {
       )}
 
       <style jsx global>{`
+        /*
+          DESKTOP
+        */
+
+        .plan-selector-button {
+          min-width: 145px;
+
+          padding:
+            12px 28px;
+        }
+
         .plan-selector-text {
           font-size: 9px !important;
+
           line-height: 1 !important;
+
           letter-spacing:
             0.1em !important;
         }
@@ -502,33 +515,49 @@ export default function Plans() {
         }
 
         /*
-          CELULAR
+          MÓVILES Y PANTALLAS
+          TÁCTILES CHICAS
 
-          TEXTO IGUAL.
-          ACHICAMOS LA FORMA.
+          AHORA SÍ CAMBIAMOS
+          EL TAMAÑO REAL DEL BOTÓN.
         */
 
-        @media (max-width: 600px) {
+        @media (
+          hover: none
+        ) and (
+          pointer: coarse
+        ) and (
+          max-width: 1024px
+        ) {
           .plan-main-button {
-            width: 165px !important;
-            height: 40px !important;
+            width: 160px !important;
+            height: 39px !important;
 
             font-size: 8.5px !important;
 
             letter-spacing:
-              0.13em !important;
+              0.12em !important;
           }
 
           .plan-selector-wrapper {
-            bottom: 20px !important;
-            gap: 5px !important;
+            bottom: 18px !important;
+
+            gap: 4px !important;
           }
 
           .plan-selector-button {
             min-width: 0 !important;
+            width: auto !important;
+
+            height: 28px !important;
 
             padding:
-              7px 9px !important;
+              0 8px !important;
+
+            display: flex !important;
+
+            align-items: center !important;
+            justify-content: center !important;
           }
 
           .plan-selector-text {
@@ -545,16 +574,25 @@ export default function Plans() {
           CELULAR MUY ANGOSTO
         */
 
-        @media (max-width: 390px) {
+        @media (
+          hover: none
+        ) and (
+          pointer: coarse
+        ) and (
+          max-width: 390px
+        ) {
           .plan-selector-wrapper {
-            gap: 4px !important;
+            gap: 3px !important;
           }
 
           .plan-selector-button {
             min-width: 0 !important;
+            width: auto !important;
+
+            height: 26px !important;
 
             padding:
-              6px 7px !important;
+              0 6px !important;
           }
 
           .plan-selector-text {
@@ -570,8 +608,8 @@ export default function Plans() {
           orientation: landscape
         ) and (max-height: 500px) {
           .plan-main-button {
-            width: 158px !important;
-            height: 38px !important;
+            width: 155px !important;
+            height: 37px !important;
 
             font-size: 8px !important;
 
@@ -580,15 +618,24 @@ export default function Plans() {
           }
 
           .plan-selector-wrapper {
-            bottom: 12px !important;
-            gap: 5px !important;
+            bottom: 10px !important;
+
+            gap: 4px !important;
           }
 
           .plan-selector-button {
             min-width: 0 !important;
+            width: auto !important;
+
+            height: 26px !important;
 
             padding:
-              6px 9px !important;
+              0 7px !important;
+
+            display: flex !important;
+
+            align-items: center !important;
+            justify-content: center !important;
           }
 
           .plan-selector-text {

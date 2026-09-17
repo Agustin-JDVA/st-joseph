@@ -37,11 +37,6 @@ export default function Hero({
   const frameCallbackRequested =
     useRef(false);
 
-  /*
-    CUANDO ESTAMOS EN LA PORTADA,
-    DEJAMOS TODO PREPARADO PARA
-    UNA NUEVA ENTRADA.
-  */
   useEffect(() => {
     if (!introMode) return;
 
@@ -53,17 +48,19 @@ export default function Hero({
   }, [introMode]);
 
   /*
-    HERO PASA DE PORTADA A VIDEO
-    APROXIMADAMENTE 2 SEGUNDOS
-    ANTES DE QUE TERMINE LA
-    TRANSICIÓN DE NUBES.
+    EL VIDEO APARECE APROXIMADAMENTE
+    2 SEGUNDOS ANTES DE QUE TERMINE
+    LA TRANSICIÓN DE NUBES.
 
-    POR ESO EL LOADER NO SE
-    HABILITA INMEDIATAMENTE.
+    ACTIVAMOS EL LOADER UN POCO ANTES
+    DE QUE TERMINE LA TRANSICIÓN.
 
-    APARECE RECIÉN CUANDO LAS
-    NUBES YA DEBERÍAN HABER
-    TERMINADO.
+    COMO LAS NUBES ESTÁN POR ENCIMA,
+    EL LOADER QUEDA TAPADO.
+
+    AL DESAPARECER LAS NUBES,
+    EL LOADER YA ESTÁ PRESENTE
+    INMEDIATAMENTE.
   */
   useEffect(() => {
     if (introMode) return;
@@ -71,21 +68,13 @@ export default function Hero({
     const timer =
       window.setTimeout(() => {
         setLoaderCanAppear(true);
-      }, 2000);
+      }, 1750);
 
     return () => {
       window.clearTimeout(timer);
     };
   }, [introMode]);
 
-  /*
-    NO TOMAMOS "PLAYING" COMO
-    VIDEO LISTO.
-
-    PEDIMOS AL NAVEGADOR QUE NOS
-    AVISE CUANDO REALMENTE HAYA
-    RENDERIZADO UN FRAME.
-  */
   const handleVideoPlaying = (
     event: React.SyntheticEvent<
       HTMLVideoElement
@@ -118,10 +107,6 @@ export default function Hero({
       return;
     }
 
-    /*
-      FALLBACK PARA NAVEGADORES
-      SIN requestVideoFrameCallback.
-    */
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         setFirstVideoFrameReady(true);
@@ -195,20 +180,11 @@ export default function Hero({
             />
           </video>
 
-          {/*
-            LOADER:
-
-            SOLO PUEDE APARECER
-            DESPUÉS DE LAS NUBES.
-
-            DESAPARECE CUANDO EL
-            PRIMER FRAME REAL DEL
-            VIDEO FUE RENDERIZADO.
-          */}
-
           {loaderCanAppear &&
             !firstVideoFrameReady && (
               <div className="mobile-video-loader">
+                <div className="mobile-video-loader-darkness" />
+
                 <div className="mobile-video-loader-ring" />
               </div>
             )}
@@ -284,7 +260,7 @@ export default function Hero({
         }
 
         /*
-          LOADER OCULTO EN PC
+          LOADER SOLO MÓVIL
         */
 
         .mobile-video-loader {
@@ -301,7 +277,28 @@ export default function Hero({
           pointer-events: none;
         }
 
+        /*
+          CAPA OSCURA DURANTE
+          LA ESPERA DEL VIDEO
+        */
+
+        .mobile-video-loader-darkness {
+          position: absolute;
+          inset: 0;
+
+          background:
+            rgba(
+              0,
+              0,
+              0,
+              0.42
+            );
+        }
+
         .mobile-video-loader-ring {
+          position: relative;
+          z-index: 2;
+
           width: 30px;
           height: 30px;
 
@@ -315,21 +312,23 @@ export default function Hero({
               0.28
             );
 
-          border-top-color: #ffffff;
+          border-top-color:
+            #ffffff;
 
           animation:
             mobileVideoLoading
             0.75s linear infinite;
 
-          filter: drop-shadow(
-            0 2px 5px
-              rgba(
-                0,
-                0,
-                0,
-                0.5
-              )
-          );
+          filter:
+            drop-shadow(
+              0 2px 5px
+                rgba(
+                  0,
+                  0,
+                  0,
+                  0.5
+                )
+            );
         }
 
         @keyframes mobileVideoLoading {
@@ -344,10 +343,6 @@ export default function Hero({
           }
         }
 
-        /*
-          SOLO DISPOSITIVOS MÓVILES
-        */
-
         @media (
           hover: none
         ) and (
@@ -359,11 +354,6 @@ export default function Hero({
             display: flex;
           }
         }
-
-        /*
-          PORTADA EN CELULAR
-          HORIZONTAL
-        */
 
         @media (
           orientation: landscape
@@ -403,7 +393,8 @@ export default function Hero({
               10px
             );
 
-            letter-spacing: 0.13em;
+            letter-spacing:
+              0.13em;
           }
         }
 
@@ -460,15 +451,16 @@ export default function Hero({
               ease-in-out
               infinite;
 
-          filter: drop-shadow(
-            0 2px 4px
-              rgba(
-                0,
-                0,
-                0,
-                0.45
-              )
-          );
+          filter:
+            drop-shadow(
+              0 2px 4px
+                rgba(
+                  0,
+                  0,
+                  0,
+                  0.45
+                )
+            );
         }
 
         @keyframes interiorContentEnter {
