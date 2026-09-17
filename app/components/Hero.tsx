@@ -29,52 +29,29 @@ export default function Hero({
     setFirstVideoFrameReady,
   ] = useState(false);
 
-  const [
-    loaderCanAppear,
-    setLoaderCanAppear,
-  ] = useState(false);
-
   const frameCallbackRequested =
     useRef(false);
 
+  /*
+    CUANDO VOLVEMOS A LA PORTADA,
+    REINICIAMOS EL ESTADO DEL VIDEO.
+  */
   useEffect(() => {
     if (!introMode) return;
 
     setFirstVideoFrameReady(false);
-    setLoaderCanAppear(false);
 
     frameCallbackRequested.current =
       false;
   }, [introMode]);
 
   /*
-    EL VIDEO APARECE APROXIMADAMENTE
-    2 SEGUNDOS ANTES DE QUE TERMINE
-    LA TRANSICIÓN DE NUBES.
+    NO USAMOS SIMPLEMENTE "PLAYING".
 
-    ACTIVAMOS EL LOADER UN POCO ANTES
-    DE QUE TERMINE LA TRANSICIÓN.
-
-    COMO LAS NUBES ESTÁN POR ENCIMA,
-    EL LOADER QUEDA TAPADO.
-
-    AL DESAPARECER LAS NUBES,
-    EL LOADER YA ESTÁ PRESENTE
-    INMEDIATAMENTE.
+    ESPERAMOS A QUE EL NAVEGADOR
+    HAYA RENDERIZADO EL PRIMER FRAME
+    REAL DEL VIDEO.
   */
-  useEffect(() => {
-    if (introMode) return;
-
-    const timer =
-      window.setTimeout(() => {
-        setLoaderCanAppear(true);
-      }, 1750);
-
-    return () => {
-      window.clearTimeout(timer);
-    };
-  }, [introMode]);
-
   const handleVideoPlaying = (
     event: React.SyntheticEvent<
       HTMLVideoElement
@@ -107,6 +84,11 @@ export default function Hero({
       return;
     }
 
+    /*
+      FALLBACK PARA NAVEGADORES
+      QUE NO SOPORTAN
+      requestVideoFrameCallback.
+    */
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         setFirstVideoFrameReady(true);
@@ -180,14 +162,25 @@ export default function Hero({
             />
           </video>
 
-          {loaderCanAppear &&
-            !firstVideoFrameReady && (
-              <div className="mobile-video-loader">
-                <div className="mobile-video-loader-darkness" />
+          {/*
+            EL HERO CAMBIA DE PORTADA
+            A VIDEO APROXIMADAMENTE
+            AL 50% DE LA TRANSICIÓN
+            DE NUBES.
 
-                <div className="mobile-video-loader-ring" />
-              </div>
-            )}
+            DESDE ESE MISMO INSTANTE
+            EL LOADER YA ESTÁ ACTIVO.
+
+            NO HAY NINGÚN DELAY EXTRA.
+          */}
+
+          {!firstVideoFrameReady && (
+            <div className="mobile-video-loader">
+              <div className="mobile-video-loader-darkness" />
+
+              <div className="mobile-video-loader-ring" />
+            </div>
+          )}
 
           <div className="pointer-events-none absolute inset-x-0 bottom-10 z-20 flex justify-center sm:bottom-12 md:bottom-14">
             <a
@@ -260,7 +253,10 @@ export default function Hero({
         }
 
         /*
-          LOADER SOLO MÓVIL
+          LOADER
+
+          OCULTO POR DEFECTO
+          PARA ESCRITORIO.
         */
 
         .mobile-video-loader {
@@ -279,7 +275,7 @@ export default function Hero({
 
         /*
           CAPA OSCURA DURANTE
-          LA ESPERA DEL VIDEO
+          LA CARGA DEL VIDEO
         */
 
         .mobile-video-loader-darkness {
@@ -294,6 +290,10 @@ export default function Hero({
               0.42
             );
         }
+
+        /*
+          CÍRCULO DE CARGA
+        */
 
         .mobile-video-loader-ring {
           position: relative;
@@ -343,6 +343,10 @@ export default function Hero({
           }
         }
 
+        /*
+          SOLO DISPOSITIVOS MÓVILES
+        */
+
         @media (
           hover: none
         ) and (
@@ -354,6 +358,10 @@ export default function Hero({
             display: flex;
           }
         }
+
+        /*
+          CELULAR HORIZONTAL
+        */
 
         @media (
           orientation: landscape
@@ -397,6 +405,11 @@ export default function Hero({
               0.13em;
           }
         }
+
+        /*
+          CELULAR HORIZONTAL
+          MUY BAJO
+        */
 
         @media (
           orientation: landscape
