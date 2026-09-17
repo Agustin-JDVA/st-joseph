@@ -27,6 +27,7 @@ const plans = [
 ];
 
 const sharedButtonStyle = `
+  plan-main-button
   flex h-14 w-[215px] items-center justify-center rounded-full bg-white
   font-[family:var(--font-wix)] text-[11px] font-medium uppercase
   tracking-[0.17em] text-black shadow-xl transition-all duration-200
@@ -412,7 +413,7 @@ export default function Plans() {
 
       {/* SELECTOR DE PLANTAS */}
       {!isExploring && (
-        <div className="pointer-events-none absolute bottom-8 left-1/2 z-[9998] flex -translate-x-1/2 items-center gap-3 sm:bottom-10">
+        <div className="plan-selector-wrapper pointer-events-none absolute bottom-8 left-1/2 z-[9998] flex -translate-x-1/2 items-center gap-3 sm:bottom-10">
           {plans.map(
             (plan, index) => (
               <button
@@ -423,7 +424,7 @@ export default function Plans() {
                     index
                   )
                 }
-                className={`pointer-events-auto min-w-[145px] whitespace-nowrap rounded-full px-7 py-3 font-[family:var(--font-wix)] font-medium uppercase shadow-lg transition-all duration-300 sm:min-w-[155px] sm:px-8 lg:min-w-[165px] lg:px-9 ${
+                className={`plan-selector-button pointer-events-auto min-w-[145px] whitespace-nowrap rounded-full px-7 py-3 font-[family:var(--font-wix)] font-medium uppercase shadow-lg transition-all duration-300 sm:min-w-[155px] sm:px-8 lg:min-w-[165px] lg:px-9 ${
                   activePlan ===
                   index
                     ? "bg-black text-white"
@@ -442,9 +443,7 @@ export default function Plans() {
       <style jsx global>{`
         .plan-selector-text {
           font-size: 9px !important;
-
           line-height: 1 !important;
-
           letter-spacing:
             0.1em !important;
         }
@@ -504,28 +503,83 @@ export default function Plans() {
           pointer-events: none;
         }
 
-        @media (max-width: 768px) {
-          .plan-content {
-            width: 100vw !important;
-            min-width: 100vw !important;
+        /*
+          CELULARES / PANTALLAS CHICAS
+
+          SOLO ACÁ ACHICAMOS
+          LOS CONTROLES.
+        */
+
+        @media (max-width: 600px) {
+          .plan-main-button {
+            width: 172px !important;
+            height: 43px !important;
+
+            font-size: 9px !important;
+
+            letter-spacing:
+              0.13em !important;
           }
 
-          .plan-image {
-            width: 100vw !important;
-            height: auto !important;
+          .plan-selector-wrapper {
+            bottom: 22px !important;
+
+            gap: 6px !important;
+          }
+
+          .plan-selector-button {
+            min-width: 112px !important;
+
+            padding: 9px 14px !important;
+          }
+
+          .plan-selector-text {
+            font-size: 7.5px !important;
+
+            letter-spacing:
+              0.08em !important;
           }
         }
+
+        /*
+          CELULAR HORIZONTAL
+
+          UN TELÉFONO HORIZONTAL PUEDE
+          TENER MÁS DE 600PX DE ANCHO,
+          POR ESO TAMBIÉN MIRAMOS
+          LA ALTURA DE PANTALLA.
+        */
 
         @media (
           orientation: landscape
         ) and (max-height: 500px) {
-          .plan-content {
-            width: 100vw !important;
+          .plan-main-button {
+            width: 165px !important;
+            height: 40px !important;
+
+            font-size: 8px !important;
+
+            letter-spacing:
+              0.12em !important;
           }
 
-          .plan-image {
-            width: 100vw !important;
-            height: auto !important;
+          .plan-selector-wrapper {
+            bottom: 14px !important;
+
+            gap: 6px !important;
+          }
+
+          .plan-selector-button {
+            min-width: 108px !important;
+
+            padding: 8px 12px !important;
+          }
+
+          .plan-selector-text {
+            font-size: 7px !important;
+
+            letter-spacing:
+              0.07em !important;
           }
         }
       `}</style>

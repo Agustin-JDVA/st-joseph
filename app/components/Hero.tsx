@@ -1,3 +1,10 @@
+"use client";
+
+import {
+  useEffect,
+  useState,
+} from "react";
+
 type HeroProps = {
   introMode?: boolean;
   isEntering?: boolean;
@@ -9,6 +16,22 @@ export default function Hero({
   isEntering = false,
   onEnter,
 }: HeroProps) {
+  const [
+    hasVideoStarted,
+    setHasVideoStarted,
+  ] = useState(false);
+
+  /*
+    SI VOLVEMOS A LA PORTADA,
+    PREPARAMOS NUEVAMENTE EL
+    INDICADOR PARA LA PRÓXIMA ENTRADA.
+  */
+  useEffect(() => {
+    if (introMode) {
+      setHasVideoStarted(false);
+    }
+  }, [introMode]);
+
   return (
     <section
       id="inicio"
@@ -67,12 +90,29 @@ export default function Hero({
             playsInline
             preload="auto"
             poster="/renders/render-01.jpg"
+            onPlaying={() =>
+              setHasVideoStarted(true)
+            }
           >
             <source
               src="/video/inicio.mp4"
               type="video/mp4"
             />
           </video>
+
+          {/*
+            LOADER SOLO HASTA QUE
+            EL VIDEO EMPIEZA REALMENTE.
+
+            CSS DECIDE SI SE MUESTRA
+            SEGÚN EL DISPOSITIVO.
+          */}
+
+          {!hasVideoStarted && (
+            <div className="mobile-video-loader">
+              <div className="mobile-video-loader-ring" />
+            </div>
+          )}
 
           <div className="pointer-events-none absolute inset-x-0 bottom-10 z-20 flex justify-center sm:bottom-12 md:bottom-14">
             <a
@@ -98,15 +138,15 @@ export default function Hero({
 
       <style jsx global>{`
         /*
-          PORTADA RESPONSIVE
-
-          Ya no depende de sm / md / lg.
-          Los elementos crecen progresivamente
-          según el tamaño real de la pantalla.
+          PORTADA
         */
 
         .intro-project-logo {
-          top: clamp(24px, 3vw, 64px);
+          top: clamp(
+            24px,
+            3vw,
+            64px
+          );
         }
 
         .intro-project-logo-image {
@@ -149,11 +189,95 @@ export default function Hero({
         }
 
         /*
-          CELULAR HORIZONTAL
+          LOADER DEL VIDEO
 
-          Acá usamos también la ALTURA
-          de pantalla para evitar que el
-          contenido crezca como escritorio.
+          POR DEFECTO ESTÁ OCULTO:
+          EN PC NO APARECE.
+        */
+
+        .mobile-video-loader {
+          display: none;
+
+          position: absolute;
+
+          inset: 0;
+
+          z-index: 15;
+
+          align-items: center;
+          justify-content: center;
+
+          pointer-events: none;
+        }
+
+        .mobile-video-loader-ring {
+          width: 30px;
+          height: 30px;
+
+          border-radius: 9999px;
+
+          border: 2px solid
+            rgba(
+              255,
+              255,
+              255,
+              0.3
+            );
+
+          border-top-color:
+            rgba(
+              255,
+              255,
+              255,
+              1
+            );
+
+          animation:
+            mobileVideoLoading
+            0.8s linear infinite;
+
+          filter: drop-shadow(
+            0 2px 4px
+              rgba(
+                0,
+                0,
+                0,
+                0.35
+              )
+          );
+        }
+
+        @keyframes mobileVideoLoading {
+          from {
+            transform: rotate(0deg);
+          }
+
+          to {
+            transform: rotate(360deg);
+          }
+        }
+
+        /*
+          DISPOSITIVOS MÓVILES
+
+          EL LOADER SOLO SE HABILITA
+          EN PANTALLAS TÁCTILES.
+        */
+
+        @media (
+          hover: none
+        ) and (
+          pointer: coarse
+        ) and (
+          max-width: 1024px
+        ) {
+          .mobile-video-loader {
+            display: flex;
+          }
+        }
+
+        /*
+          CELULAR HORIZONTAL
         */
 
         @media (
@@ -199,8 +323,8 @@ export default function Hero({
         }
 
         /*
-          CELULARES HORIZONTALES
-          MUY BAJOS
+          CELULAR HORIZONTAL
+          MUY BAJO
         */
 
         @media (
@@ -224,11 +348,17 @@ export default function Hero({
 
             font-size: 8px;
           }
+
+          .mobile-video-loader-ring {
+            width: 24px;
+            height: 24px;
+          }
         }
 
         .interior-scroll-enter {
           animation:
-            interiorContentEnter 1300ms
+            interiorContentEnter
+              1300ms
               cubic-bezier(
                 0.22,
                 1,
@@ -236,27 +366,39 @@ export default function Hero({
                 1
               )
               both,
-            scrollInvitationFade 2.4s
-              ease-in-out 1300ms infinite;
+            scrollInvitationFade
+              2.4s
+              ease-in-out
+              1300ms
+              infinite;
         }
 
         .scroll-arrow {
           animation:
-            scrollInvitationMove 1.7s
-              ease-in-out infinite;
+            scrollInvitationMove
+              1.7s
+              ease-in-out
+              infinite;
 
           filter: drop-shadow(
             0 2px 4px
-              rgba(0, 0, 0, 0.45)
+              rgba(
+                0,
+                0,
+                0,
+                0.45
+              )
           );
         }
 
         @keyframes interiorContentEnter {
           0% {
             opacity: 0;
-            transform: translateY(
-              14px
-            );
+
+            transform:
+              translateY(
+                14px
+              );
           }
 
           35% {
@@ -265,29 +407,30 @@ export default function Hero({
 
           100% {
             opacity: 1;
-            transform: translateY(
-              0
-            );
+
+            transform:
+              translateY(
+                0
+              );
           }
         }
 
         @keyframes scrollInvitationMove {
           0% {
-            transform: translateY(
-              0
-            );
+            transform:
+              translateY(0);
           }
 
           50% {
-            transform: translateY(
-              12px
-            );
+            transform:
+              translateY(
+                12px
+              );
           }
 
           100% {
-            transform: translateY(
-              0
-            );
+            transform:
+              translateY(0);
           }
         }
 
