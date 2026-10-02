@@ -1,3 +1,4 @@
+
 "use client";
 
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -18,10 +19,6 @@ const renders = [
   "render-04.jpg",
   "render-05.jpg",
   "render-06.jpg",
-  "render-07.jpg",
-  "render-08.jpg",
-  "render-09.jpg",
-  "render-10.jpg",
 ];
 
 function ZoomableRender({

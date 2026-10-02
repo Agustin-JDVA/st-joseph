@@ -1,6 +1,12 @@
+
 "use client";
 
-import { useEffect, useState } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+
 import {
   TransformWrapper,
   TransformComponent,
@@ -9,22 +15,38 @@ import {
 
 const plans = [
   {
-    name: "Planta Baja Tipo",
-    src: "/planos/planta baja tipo.png",
+    name: "Planta N1",
+    src: "/planos/planta n1.jpg",
   },
   {
     name: "Planta Baja",
-    src: "/planos/planta baja.png",
+    src: "/planos/planta baja.jpg",
+  },
+  {
+    name: "Planta N2 y N3",
+    src: "/planos/planta n2 y n3.jpg",
   },
   {
     name: "Planta Azotea",
-    src: "/planos/planta azotea.png",
-  },
-  {
-    name: "Planta Subsuelo",
-    src: "/planos/planta subsuelo.png",
+    src: "/planos/planta azotea.jpg",
   },
 ];
+
+type ImageSize = {
+  src: string;
+  width: number;
+  height: number;
+};
+
+type ViewportSize = {
+  width: number;
+  height: number;
+};
+
+type PlanLayout = {
+  width: number;
+  height: number;
+};
 
 const sharedButtonStyle = `
   plan-main-button
@@ -111,12 +133,16 @@ const PlanImage = ({
   src,
   name,
   isExploring,
+  isPortrait,
   planWrapperClass,
+  layout,
 }: {
   src: string;
   name: string;
   isExploring: boolean;
+  isPortrait: boolean;
   planWrapperClass: string;
+  layout: PlanLayout;
 }) => {
   const { resetTransform } =
     useControls();
@@ -205,18 +231,61 @@ const PlanImage = ({
       }
       contentClass="plan-content"
     >
-      <img
-        src={src}
-        alt={name}
-        className="plan-image"
-        draggable={false}
-        onLoad={handleImageLoad}
-      />
+      {/*
+        ESCENARIO DEL PLANO.
+
+        SUS DIMENSIONES YA FUERON
+        CALCULADAS PARA CUBRIR
+        TODA LA PANTALLA.
+
+        LA LIBRERÍA UTILIZA ESTE
+        TAMAÑO PARA CALCULAR
+        LOS LÍMITES DE MOVIMIENTO.
+      */}
+
+      <div
+        className="plan-stage"
+        style={{
+          width: layout.width,
+          height: layout.height,
+        }}
+      >
+        {isPortrait ? (
+          <img
+            src={src}
+            alt={name}
+            className="plan-image plan-image-portrait"
+            style={{
+              width: layout.height,
+              height: layout.width,
+            }}
+            draggable={false}
+            onLoad={handleImageLoad}
+          />
+        ) : (
+          <img
+            src={src}
+            alt={name}
+            className="plan-image"
+            style={{
+              width: layout.width,
+              height: layout.height,
+            }}
+            draggable={false}
+            onLoad={handleImageLoad}
+          />
+        )}
+      </div>
     </TransformComponent>
   );
 };
 
 export default function Plans() {
+  const sectionRef =
+    useRef<HTMLElement | null>(
+      null
+    );
+
   const [
     activePlan,
     setActivePlan,
@@ -236,6 +305,29 @@ export default function Plans() {
     isExploring,
     setIsExploring,
   ] = useState(false);
+
+  const [
+    viewportSize,
+    setViewportSize,
+  ] = useState<ViewportSize>({
+    width: 0,
+    height: 0,
+  });
+
+  const [
+    imageSize,
+    setImageSize,
+  ] = useState<ImageSize | null>(
+    null
+  );
+
+  const currentPlan =
+    plans[activePlan];
+
+  /*
+    DETECTAMOS LA ORIENTACIÓN
+    DEL DISPOSITIVO.
+  */
 
   useEffect(() => {
     const orientationQuery =
@@ -289,6 +381,210 @@ export default function Plans() {
     };
   }, []);
 
+  /*
+    MEDIMOS EL ESPACIO REAL
+    DISPONIBLE PARA EL PLANO.
+
+    ESTO ES IMPORTANTE PARA
+    PANTALLAS CUADRADAS,
+    VERTICALES, HORIZONTALES
+    Y CAMBIOS DE TAMAÑO.
+  */
+
+  useEffect(() => {
+    const section =
+      sectionRef.current;
+
+    if (!section) return;
+
+    const updateViewportSize = () => {
+      const width =
+        section.clientWidth;
+
+      const height =
+        section.clientHeight;
+
+      setViewportSize((previous) => {
+        if (
+          previous.width === width &&
+          previous.height === height
+        ) {
+          return previous;
+        }
+
+        return {
+          width,
+          height,
+        };
+      });
+    };
+
+    updateViewportSize();
+
+    const observer =
+      new ResizeObserver(() => {
+        updateViewportSize();
+      });
+
+    observer.observe(section);
+
+    window.addEventListener(
+      "resize",
+      updateViewportSize
+    );
+
+    return () => {
+      observer.disconnect();
+
+      window.removeEventListener(
+        "resize",
+        updateViewportSize
+      );
+    };
+  }, []);
+
+  /*
+    LEEMOS LAS DIMENSIONES
+    ORIGINALES DE CADA JPG.
+
+    NO ASUMIMOS QUE TODAS LAS
+    PLANTAS TIENEN LA MISMA
+    PROPORCIÓN.
+  */
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const image =
+      new window.Image();
+
+    const handleLoad = () => {
+      if (cancelled) return;
+
+      if (
+        image.naturalWidth <= 0 ||
+        image.naturalHeight <= 0
+      ) {
+        return;
+      }
+
+      setImageSize({
+        src: currentPlan.src,
+        width: image.naturalWidth,
+        height: image.naturalHeight,
+      });
+    };
+
+    image.onload = handleLoad;
+
+    image.src =
+      currentPlan.src;
+
+    if (
+      image.complete &&
+      image.naturalWidth > 0
+    ) {
+      handleLoad();
+    }
+
+    return () => {
+      cancelled = true;
+      image.onload = null;
+    };
+  }, [currentPlan.src]);
+
+  /*
+    CÁLCULO DE COBERTURA.
+
+    EL PLANO DEBE CUBRIR
+    SIMULTÁNEAMENTE:
+
+    - TODO EL ANCHO.
+    - TODO EL ALTO.
+
+    UTILIZAMOS LA ESCALA
+    MAYOR DE LAS DOS.
+
+    DE ESTA MANERA NO QUEDAN
+    FRANJAS BLANCAS CUANDO
+    LA PANTALLA ES MÁS CUADRADA.
+
+    EN VERTICAL INTERCAMBIAMOS
+    ANCHO Y ALTO PORQUE EL JPG
+    SE GIRA 90 GRADOS.
+  */
+
+  const calculatePlanLayout =
+    (): PlanLayout | null => {
+      if (
+        !imageSize ||
+        imageSize.src !==
+          currentPlan.src ||
+        viewportSize.width <= 0 ||
+        viewportSize.height <= 0
+      ) {
+        return null;
+      }
+
+      const naturalWidth =
+        isPortrait
+          ? imageSize.height
+          : imageSize.width;
+
+      const naturalHeight =
+        isPortrait
+          ? imageSize.width
+          : imageSize.height;
+
+      const horizontalScale =
+        viewportSize.width /
+        naturalWidth;
+
+      const verticalScale =
+        viewportSize.height /
+        naturalHeight;
+
+      /*
+        COVER:
+
+        ELEGIMOS SIEMPRE
+        LA ESCALA MAYOR.
+      */
+
+      const coverScale =
+        Math.max(
+          horizontalScale,
+          verticalScale
+        );
+
+      /*
+        PEQUEÑO MARGEN TÉCNICO
+        PARA EVITAR LÍNEAS BLANCAS
+        POR REDONDEO DE PÍXELES.
+      */
+
+      const safeScale =
+        coverScale * 1.002;
+
+      return {
+        width: Math.ceil(
+          naturalWidth * safeScale
+        ),
+
+        height: Math.ceil(
+          naturalHeight * safeScale
+        ),
+      };
+    };
+
+  const planLayout =
+    calculatePlanLayout();
+
+  /*
+    BLOQUEAMOS EL SCROLL
+    DURANTE LA EXPLORACIÓN.
+  */
+
   useEffect(() => {
     if (!isExploring) {
       document.body.classList.remove(
@@ -331,70 +627,144 @@ export default function Plans() {
       ? "plan-wrapper plan-exploring"
       : "plan-wrapper";
 
-  const currentPlan =
-    plans[activePlan];
+  /*
+    POSICIÓN INICIAL:
+
+    CENTRAMOS EL PLANO YA
+    ESCALADO SOBRE LA PANTALLA.
+
+    LAS PARTES QUE SOBRESALEN
+    QUEDAN DISPONIBLES PARA
+    EXPLORARLAS.
+  */
+
+  const initialPositionX =
+    planLayout
+      ? (viewportSize.width -
+          planLayout.width) / 2
+      : 0;
+
+  const initialPositionY =
+    planLayout
+      ? (viewportSize.height -
+          planLayout.height) / 2
+      : 0;
 
   return (
     <section
+      ref={sectionRef}
       id="planos"
       className="relative h-screen w-full overflow-hidden bg-white"
     >
-      <TransformWrapper
-        key={`${activePlan}-${isPortrait ? "portrait" : "landscape"}-${isDesktop ? "desktop" : "touch"}`}
-        initialScale={1}
-        minScale={1}
-        maxScale={6}
-        disablePadding={true}
-        limitToBounds={true}
-        centerZoomedOut={false}
-        centerOnInit={true}
-        velocityAnimation={{
-          disabled: true,
-        }}
-        wheel={{
-          disabled:
-            !isDesktop ||
-            !isExploring,
-          step: 0.2,
-        }}
-        doubleClick={{
-          disabled:
-            !isExploring,
-          mode: "reset",
-          animationTime: 300,
-        }}
-        panning={{
-          disabled:
-            !isExploring,
-          velocityDisabled: true,
-        }}
-        pinch={{
-          disabled:
-            !isExploring,
-          allowPanning: true,
-        }}
-      >
-        <PlanControls
-          isExploring={
-            isExploring
-          }
-          isDesktop={isDesktop}
-          onExit={() =>
-            setIsExploring(false)
-          }
-        />
+      {/*
+        MIENTRAS SE CALCULAN
+        LAS DIMENSIONES DEL JPG,
+        MOSTRAMOS UNA VISTA
+        PROVISIONAL CON COVER.
+      */}
 
-        <PlanImage
-          src={currentPlan.src}
-          name={currentPlan.name}
-          isExploring={
-            isExploring
+      {!planLayout && (
+        <div className="plan-loading-preview">
+          <img
+            src={currentPlan.src}
+            alt={currentPlan.name}
+            className={
+              isPortrait
+                ? "plan-loading-image plan-loading-image-portrait"
+                : "plan-loading-image"
+            }
+            draggable={false}
+          />
+        </div>
+      )}
+
+      {planLayout && (
+        <TransformWrapper
+          key={`${activePlan}-${isPortrait ? "portrait" : "landscape"}-${isDesktop ? "desktop" : "touch"}-${planLayout.width}-${planLayout.height}`}
+          initialScale={1}
+          minScale={1}
+          maxScale={6}
+
+          /*
+            POSICIÓN INICIAL
+            REALMENTE CENTRADA.
+          */
+          initialPositionX={
+            initialPositionX
           }
-          planWrapperClass={
-            planWrapperClass
+          initialPositionY={
+            initialPositionY
           }
-        />
-      </TransformWrapper>
+          centerOnInit={false}
+
+          /*
+            NO PERMITIMOS QUE
+            LOS BORDES DEL PLANO
+            ENTREN MÁS ALLÁ DE
+            LA PANTALLA.
+          */
+          disablePadding={true}
+          limitToBounds={true}
+          centerZoomedOut={false}
+
+          velocityAnimation={{
+            disabled: true,
+          }}
+
+          wheel={{
+            disabled:
+              !isDesktop ||
+              !isExploring,
+            step: 0.2,
+          }}
+
+          doubleClick={{
+            disabled:
+              !isExploring,
+            mode: "reset",
+            animationTime: 300,
+          }}
+
+          panning={{
+            disabled:
+              !isExploring,
+            velocityDisabled: true,
+          }}
+
+          pinch={{
+            disabled:
+              !isExploring,
+            allowPanning: true,
+          }}
+        >
+          <PlanControls
+            isExploring={
+              isExploring
+            }
+            isDesktop={
+              isDesktop
+            }
+            onExit={() =>
+              setIsExploring(false)
+            }
+          />
+
+          <PlanImage
+            src={currentPlan.src}
+            name={currentPlan.name}
+            isExploring={
+              isExploring
+            }
+            isPortrait={
+              isPortrait
+            }
+            planWrapperClass={
+              planWrapperClass
+            }
+            layout={planLayout}
+          />
+        </TransformWrapper>
+      )}
 
       {!isExploring && (
         <div className="pointer-events-none absolute inset-0 z-[9997] flex items-center justify-center">
@@ -459,6 +829,10 @@ export default function Plans() {
             0.1em !important;
         }
 
+        /*
+          ÁREA VISIBLE DEL PLANO
+        */
+
         .plan-wrapper {
           width: 100% !important;
           height: 100% !important;
@@ -480,23 +854,53 @@ export default function Plans() {
           cursor: grabbing !important;
         }
 
+        /*
+          EL CONTENEDOR YA NO
+          ESTÁ FIJADO A 100VW.
+
+          DEJAMOS QUE TOME EL
+          TAMAÑO REAL CALCULADO
+          DEL ESCENARIO INTERIOR.
+
+          ESTO ES FUNDAMENTAL PARA
+          NO PERDER LOS LÍMITES
+          CORRECTOS DE EXPLORACIÓN.
+        */
+
         .plan-content {
           display: block !important;
 
-          width: 100vw !important;
-          height: auto !important;
-
-          min-width: 100vw !important;
+          width: max-content !important;
+          height: max-content !important;
 
           margin: 0 !important;
           padding: 0 !important;
         }
 
+        /*
+          ESCENARIO QUE CUBRE
+          TODA LA PANTALLA.
+        */
+
+        .plan-stage {
+          position: relative;
+
+          display: block;
+
+          flex: none;
+
+          margin: 0 !important;
+          padding: 0 !important;
+
+          overflow: hidden;
+        }
+
+        /*
+          IMAGEN ORIGINAL
+        */
+
         .plan-image {
           display: block !important;
-
-          width: 100vw !important;
-          height: auto !important;
 
           max-width: none !important;
           max-height: none !important;
@@ -504,7 +908,7 @@ export default function Plans() {
           margin: 0 !important;
           padding: 0 !important;
 
-          object-fit: contain;
+          object-fit: fill;
 
           user-select: none;
 
@@ -515,11 +919,74 @@ export default function Plans() {
         }
 
         /*
+          ROTACIÓN EN VERTICAL
+
+          LA IMAGEN ORIGINAL
+          INTERCAMBIA SUS MEDIDAS
+          CON LAS DEL ESCENARIO.
+
+          DESPUÉS GIRA -90 GRADOS
+          Y OCUPA TODA SU SUPERFICIE.
+        */
+
+        .plan-image.plan-image-portrait {
+          position: absolute !important;
+
+          left: 0 !important;
+          top: 100% !important;
+
+          transform-origin:
+            top left !important;
+
+          transform:
+            rotate(-90deg) !important;
+        }
+
+        /*
+          VISTA PROVISIONAL
+          DURANTE LA CARGA.
+        */
+
+        .plan-loading-preview {
+          position: absolute;
+          inset: 0;
+
+          overflow: hidden;
+
+          background: white;
+        }
+
+        .plan-loading-image {
+          position: absolute;
+
+          width: 100%;
+          height: 100%;
+
+          object-fit: cover;
+
+          user-select: none;
+
+          -webkit-user-drag: none;
+        }
+
+        .plan-loading-image-portrait {
+          width: 100vh;
+          height: 100vw;
+
+          left: 50%;
+          top: 50%;
+
+          transform:
+            translate(-50%, -50%)
+            rotate(-90deg);
+        }
+
+        /*
           MÓVILES Y PANTALLAS
           TÁCTILES CHICAS
 
-          AHORA SÍ CAMBIAMOS
-          EL TAMAÑO REAL DEL BOTÓN.
+          CONSERVAMOS LOS
+          AJUSTES ANTERIORES.
         */
 
         @media (
